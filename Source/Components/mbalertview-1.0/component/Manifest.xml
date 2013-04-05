@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<component format="1" id="mbalertview">
+  <name>Overlay Dialog and Progress View</name>
+  <publisher>Mo Bitar</publisher>
+  <publisher-url>https://github.com/mobitar/MBAlertView</publisher-url>
+  <version>1.0</version>
+  <summary>A simple overlay-style dialog and HUD library for iOS.</summary>
+  <samples>
+    <sample id="MBAlertViewDemo">
+      <name>iOS Sample.</name>
+      <summary>iOS Sample</summary>
+    </sample>
+  </samples>
+</component>

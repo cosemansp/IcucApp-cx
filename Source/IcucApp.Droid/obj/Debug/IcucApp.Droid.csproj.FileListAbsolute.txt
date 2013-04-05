@@ -1,0 +1,13 @@
+Z:\git\IcucApp-cx\Source\IcucApp.Droid\bin\Debug\IcucApp.Droid.dll
+Z:\git\IcucApp-cx\Source\IcucApp.Droid\bin\Debug\IcucApp.Droid.pdb
+Z:\git\IcucApp-cx\Source\IcucApp.Droid\bin\Debug\IcucApp.Droid.dll.mdb
+Z:\git\IcucApp-cx\Source\IcucApp.Droid\bin\Debug\IcucApp.Droid.apk
+Z:\git\IcucApp-cx\Source\IcucApp.Droid\bin\Debug\IcucApp.Droid-Signed.apk
+Z:\git\IcucApp-cx\Source\IcucApp.Droid\obj\Debug\IcucApp.Droid.dll
+Z:\git\IcucApp-cx\Source\IcucApp.Droid\obj\Debug\IcucApp.Droid.pdb
+Z:\git\IcucApp-cx\Source\IcucApp.Droid\obj\Debug\android\bin\IcucApp.Droid.apk
+Z:\git\IcucApp-cx\Source\IcucApp.Droid\obj\Debug\res\layout\main.xml
+Z:\git\IcucApp-cx\Source\IcucApp.Droid\obj\Debug\res\values\strings.xml
+Z:\git\IcucApp-cx\Source\IcucApp.Droid\obj\Debug\res\drawable\icon.png
+Z:\git\IcucApp-cx\Source\IcucApp.Droid\obj\Debug\R.cs.flag
+Z:\git\IcucApp-cx\Source\IcucApp.Droid\obj\Debug\uploadflags.txt

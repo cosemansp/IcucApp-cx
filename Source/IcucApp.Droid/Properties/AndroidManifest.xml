@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto"
+          package="com.euri.icuc" android:versionCode="1" android:versionName="1.0.0.1">
+	<uses-sdk android:targetSdkVersion="14" android:minSdkVersion="14" />
+	<application android:label="ICUC" android:theme="@style/CustomLightTheme" android:icon="@drawable/Icon">
+		<meta-data android:name="App.CustomKey" android:value="" />
+	</application>
+	<supports-screens android:xlargeScreens="false" />
+</manifest>
