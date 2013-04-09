@@ -6,14 +6,23 @@ using RestSharp;
 
 namespace IcucApp.Core.Services.Facebook
 {
-    public class FacebookFeedAgent
+    public interface IFacebookFeedAgent
+    {
+        FeedsMessage GetFeeds(string feedId);
+    }
+
+    /// <summary>
+    /// http://graph.facebook.com/ICUCevents?fref=ts
+    /// https://www.facebook.com/feeds/page.php?id=441615792534282&format=json
+    /// </summary>
+    public class FacebookFeedAgent : IFacebookFeedAgent
     {
         private readonly Uri _uri;
         private readonly ILog _log = LogManager.GetLogger(typeof(FacebookFeedAgent));
 
-        public FacebookFeedAgent(string url)
+        public FacebookFeedAgent()
         {
-            _uri = new Uri(url);
+            _uri = new Uri("https://www.facebook.com/feeds/page.php");
         }
 
         public FeedsMessage GetFeeds(string feedId)

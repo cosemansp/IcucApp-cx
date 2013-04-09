@@ -3,6 +3,9 @@ using IcucApp.Core;
 using IcucApp.Core.Configuration;
 using IcucApp.Core.Diagnostics;
 using IcucApp.Core.Ioc;
+using IcucApp.Core.Presentation;
+using IcucApp.Core.Services;
+using IcucApp.Touch.ViewControllers;
 using MonoTouch.UIKit;
 
 namespace IcucApp.Touch
@@ -27,7 +30,6 @@ namespace IcucApp.Touch
             //
             _appSettings = ConfigurationManager.GetSettings<AppSettings>();
             _userSettings = ConfigurationManager.GetSettings<UserSettings>();
-            //Log.InfoFormat("BackgroundRetryTime: {0}", _appSettings.BackgroundRetryTime);
 
 
             //
@@ -44,7 +46,7 @@ namespace IcucApp.Touch
 
                 // local services
                 container.Register<IDispatcher>(new Dispatcher(appDelegate));
-                //container.Register<INavigator>(new TouchNavigator(app));
+                container.Register<INavigator>(new TouchNavigator(app));
                 //container.Register<IFileSystem, TouchFileSystem>().AsSingleton();
                 //container.Register<IAssets, TouchAssets>().AsSingleton();
                 //container.Register<ISocialSharing, CustomSocicalSharing>().AsSingleton();
@@ -53,11 +55,7 @@ namespace IcucApp.Touch
             //
             // define routes
             //
-            //RouteConfig.MapRoute<ArticlePresenter>("ArticlePage", context => new ArticleWebViewController(context), true);
-            //RouteConfig.MapRoute<LoginPresenter>("LoginPage", context => new LoginViewController(context), true);
-            //RouteConfig.MapRoute<SectionPresenter>("SectionPage", context => new SectionViewController(context), true);
-            //RouteConfig.MapRoute<CommentsPresenter>("CommentsPage", context => new CommentsViewController(context), true);
-            //RouteConfig.MapRoute<SelectRegionPresenter>("SelectRegioPage", context => new SelectRegionViewController(context), true);
+            RouteConfig.MapRoute<FacebookDetailPresenter>("FacebookDetail", context => new FacebookDetailViewController(context), true);
         }
     }
 }

@@ -88,6 +88,8 @@
     <Compile Include="BootStrapper.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="ViewControllers\FacebookDetailViewController.cs" />
+    <Compile Include="ViewControllers\Elements\FacebookEntryElement.cs" />
     <Compile Include="ViewControllers\Tab3ViewController.cs" />
     <Compile Include="ViewControllers\Tab2ViewController.cs" />
     <Compile Include="ViewControllers\HomeViewController.cs" />
@@ -126,7 +128,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewControllers\Elements\" />
     <Folder Include="ViewControllers\Views\" />
   </ItemGroup>
   <ItemGroup>

@@ -78,6 +78,7 @@
     <DefineConstants>TOUCH</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CacheStore.cs" />
     <Compile Include="Configuration\AppSettings.cs" />
     <Compile Include="Configuration\AppSettingsBase.cs" />
     <Compile Include="Configuration\ConfigurartionManager.cs" />
@@ -94,12 +95,17 @@
     <Compile Include="Ioc\Container.cs" />
     <Compile Include="Ioc\ContainerExtensions.cs" />
     <Compile Include="Ioc\TinyIoc.cs" />
+    <Compile Include="JsonExtensions.cs" />
+    <Compile Include="Mappers\FeedEntryMapper.cs" />
     <Compile Include="Net\NetworkActivityIndicator.cs" />
+    <Compile Include="Presentation\FacebookDetailsPresenter.cs" />
+    <Compile Include="Presentation\INavigator.cs" />
     <Compile Include="Presentation\Tab3Presenter.cs" />
     <Compile Include="Presentation\Tab2Presenter.cs" />
     <Compile Include="Presentation\IPresenter.cs" />
     <Compile Include="Presentation\IView.cs" />
     <Compile Include="Presentation\MainPresenter.cs" />
+    <Compile Include="Presentation\ViewModels\FacebookDetailModel.cs" />
     <Compile Include="Presentation\ViewModels\Tab3ViewModel.cs" />
     <Compile Include="Presentation\ViewModels\Tab2ViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HomeViewModel.cs" />
@@ -115,6 +121,7 @@
     <Compile Include="Services\PushWoosh\SetTagsPayload.cs" />
     <Compile Include="Services\PushWoosh\SetTagsResultMessage.cs" />
     <Compile Include="Services\PushWoosh\StatusMessage.cs" />
+    <Compile Include="Services\TouchNavigator.cs" />
     <Compile Include="Services\WebBrowser.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="TinyMessenger.cs" />
@@ -124,6 +131,7 @@
     <Compile Include="Touch\UIKit\UIAlertHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Services\Commands\" />
     <Folder Include="Touch\UIKit\Dialog\" />
   </ItemGroup>
   <ItemGroup>
