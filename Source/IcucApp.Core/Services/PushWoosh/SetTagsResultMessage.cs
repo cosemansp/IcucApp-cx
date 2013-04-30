@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 
-namespace IcucApp.Core.Services.PushWoosh
+namespace IcucApp.Services.PushWoosh
 {
+    // ReSharper disable InconsistentNaming
     public class SetTagsResultMessage : StatusMessage
     {
         public SetTagsResponse response { get; set; }
@@ -17,4 +18,5 @@ namespace IcucApp.Core.Services.PushWoosh
         public string tag { get; set; }
         public string reason { get; set; }
     }
+    // ReSharper restore InconsistentNaming
 }

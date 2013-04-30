@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using IcucApp.Touch.ViewControllers;
+using IcucApp.ViewControllers;
 using MonoTouch.UIKit;
 
-namespace IcucApp.Touch
+namespace IcucApp
 {
     public class MainViewController : UITabBarController
     {
@@ -14,21 +14,25 @@ namespace IcucApp.Touch
             // init tabs
             var tabs = new List<UIViewController>();
 
-            // Add home page tab
-            var newsTab = new UINavigationController(new HomeViewController());
+            // Add news page tab
+            var newsTab = new UINavigationController(new NewsViewController());
             newsTab.TabBarItem = new UITabBarItem("Home", UIImage.FromBundle("house"), 1);
             tabs.Add(newsTab);
 
-            // Add regional news tab
-            var regionalNewsTab = new UINavigationController(new Tab2ViewController());
+            // Add line-up tab
+            var regionalNewsTab = new UINavigationController(new LineupViewController());
             regionalNewsTab.TabBarItem = new UITabBarItem("Tab2", UIImage.FromBundle("fire_02"), 2);
             tabs.Add(regionalNewsTab);
 
-
-            // Add settings tab
-            var settingsTab = new UINavigationController(new Tab3ViewController());
+            // Add info tab
+            var settingsTab = new UINavigationController(new InfoViewController());
             settingsTab.TabBarItem = new UITabBarItem("Tab3", UIImage.FromBundle("clapboard"), 3);
             tabs.Add(settingsTab);
+
+            // Add info tab
+            var ticketTab = new UINavigationController(new TicketViewController());
+            ticketTab.TabBarItem = new UITabBarItem("Tab4", UIImage.FromBundle("clapboard"), 4);
+            tabs.Add(ticketTab);
 
             // Assign to view controllers.
             ViewControllers = tabs.ToArray();

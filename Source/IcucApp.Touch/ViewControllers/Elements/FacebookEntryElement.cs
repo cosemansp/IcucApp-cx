@@ -1,7 +1,7 @@
 ﻿using MonoTouch.Dialog;
 using MonoTouch.Foundation;
 
-namespace IcucApp.Touch.ViewControllers.Elements
+namespace IcucApp.ViewControllers.Elements
 {
     public class FacebookEntryElement : StyledStringElement
     {

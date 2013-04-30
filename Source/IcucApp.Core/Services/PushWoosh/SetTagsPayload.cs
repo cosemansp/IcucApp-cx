@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using RestSharp;
 
-namespace IcucApp.Core.Services.PushWoosh
+namespace IcucApp.Services.PushWoosh
 {
     public class SetTagsPayload
     {
@@ -17,8 +17,10 @@ namespace IcucApp.Core.Services.PushWoosh
             }
         }
 
+        // ReSharper disable InconsistentNaming
         public string application { get; private set; }
         public string hwid { get; private set; }
         public JsonObject tags { get; private set; }
+        // ReSharper restore InconsistentNaming
     }
 }

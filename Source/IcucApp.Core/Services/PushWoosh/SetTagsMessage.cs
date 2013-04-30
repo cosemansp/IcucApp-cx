@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace IcucApp.Core.Services.PushWoosh
+namespace IcucApp.Services.PushWoosh
 {
     public class SetTagsMessage
     {
@@ -9,6 +9,8 @@ namespace IcucApp.Core.Services.PushWoosh
             request = new SetTagsPayload(application, hwid, tags);
         }
 
+        // ReSharper disable InconsistentNaming
         public SetTagsPayload request { get; set; }
+        // ReSharper restore InconsistentNaming
     }
 }

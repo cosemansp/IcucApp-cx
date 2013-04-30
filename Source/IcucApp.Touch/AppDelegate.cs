@@ -1,11 +1,13 @@
 using System;
+using IcucApp.Configuration;
 using IcucApp.Core.Configuration;
 using IcucApp.Core.Diagnostics;
 using IcucApp.Core.Ioc;
+using IcucApp.Touch;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
-namespace IcucApp.Touch
+namespace IcucApp
 {
 	[Register ("AppDelegate")]
 	public class AppDelegate : UIApplicationDelegate

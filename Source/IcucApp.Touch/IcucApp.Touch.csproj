@@ -8,7 +8,7 @@
     <ProjectGuid>{6FA09B1B-0872-450A-AE33-AB994A19881A}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>IcucApp.Touch</RootNamespace>
+    <RootNamespace>IcucApp</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
@@ -16,7 +16,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
+    <DefineConstants>DEBUG; TOUCH</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -84,16 +84,175 @@
     <AssemblyName>IcucAppTouch</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\IcucApp.Core\Configuration\AppSettings.cs">
+      <Link>Configuration\AppSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Configuration\UserSettings.cs">
+      <Link>Configuration\UserSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\CoreRegistration.cs">
+      <Link>CoreRegistration.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\CacheStore.cs">
+      <Link>Core\CacheStore.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Configuration\AppSettingsBase.cs">
+      <Link>Core\Configuration\AppSettingsBase.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Configuration\ConfigurartionManager.cs">
+      <Link>Core\Configuration\ConfigurartionManager.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Configuration\InvalidConfigurationException.cs">
+      <Link>Core\Configuration\InvalidConfigurationException.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Configuration\UserSettingsBase.cs">
+      <Link>Core\Configuration\UserSettingsBase.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Device.cs">
+      <Link>Core\Device.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Diagnostics\ConsoleAppender.cs">
+      <Link>Core\Diagnostics\ConsoleAppender.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Diagnostics\LogManager.cs">
+      <Link>Core\Diagnostics\LogManager.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Dispatcher.cs">
+      <Link>Core\Dispatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Display.cs">
+      <Link>Core\Display.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\IMapper.cs">
+      <Link>Core\IMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Ioc\Container.cs">
+      <Link>Core\Ioc\Container.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Ioc\ContainerExtensions.cs">
+      <Link>Core\Ioc\ContainerExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Ioc\TinyIoc.cs">
+      <Link>Core\Ioc\TinyIoc.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\JsonExtensions.cs">
+      <Link>Core\JsonExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Net\CommunicationException.cs">
+      <Link>Core\Net\CommunicationException.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Net\NetworkActivityIndicator.cs">
+      <Link>Core\Net\NetworkActivityIndicator.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\StringExtensions.cs">
+      <Link>Core\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\TinyMessenger.cs">
+      <Link>Core\TinyMessenger.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\UI\INavigator.cs">
+      <Link>Core\UI\INavigator.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\UI\IPresenter.cs">
+      <Link>Core\UI\IPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\UI\IView.cs">
+      <Link>Core\UI\IView.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\WebBrowser.cs">
+      <Link>Core\WebBrowser.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\FacebookDetailPresenter.cs">
+      <Link>Presentation\FacebookDetailPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\InfoPresenter.cs">
+      <Link>Presentation\InfoPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\LineupPresenter.cs">
+      <Link>Presentation\LineupPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\Mappers\FeedEntryMapper.cs">
+      <Link>Presentation\Mappers\FeedEntryMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\NewsPresenter.cs">
+      <Link>Presentation\NewsPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\TicketPresenter.cs">
+      <Link>Presentation\TicketPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\FacebookDetailModel.cs">
+      <Link>Presentation\ViewModels\FacebookDetailModel.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\InfoViewModel.cs">
+      <Link>Presentation\ViewModels\InfoViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\LineupViewModel.cs">
+      <Link>Presentation\ViewModels\LineupViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\NewsViewModel.cs">
+      <Link>Presentation\ViewModels\NewsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\TicketModel.cs">
+      <Link>Presentation\ViewModels\TicketModel.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\WebsiteDetailModel.cs">
+      <Link>Presentation\ViewModels\WebsiteDetailModel.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\WebsiteDetailPresenter.cs">
+      <Link>Presentation\WebsiteDetailPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\Facebook\FacebookFeedAgent.cs">
+      <Link>Services\Facebook\FacebookFeedAgent.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\IPushWooshAgent.cs">
+      <Link>Services\PushWoosh\IPushWooshAgent.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\PushWooshAgent.cs">
+      <Link>Services\PushWoosh\PushWooshAgent.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\PushWooshException.cs">
+      <Link>Services\PushWoosh\PushWooshException.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\RegistrationMessage.cs">
+      <Link>Services\PushWoosh\RegistrationMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\RegistrationPayload.cs">
+      <Link>Services\PushWoosh\RegistrationPayload.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\SetTagsMessage.cs">
+      <Link>Services\PushWoosh\SetTagsMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\SetTagsPayload.cs">
+      <Link>Services\PushWoosh\SetTagsPayload.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\SetTagsResultMessage.cs">
+      <Link>Services\PushWoosh\SetTagsResultMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\StatusMessage.cs">
+      <Link>Services\PushWoosh\StatusMessage.cs</Link>
+    </Compile>
     <Compile Include="Appearance.cs" />
     <Compile Include="BootStrapper.cs" />
+    <Compile Include="Core\DispatcherTouch.cs" />
+    <Compile Include="Core\UI\LabelExtensions.cs" />
+    <Compile Include="Core\UI\MvpDialogViewController.cs" />
+    <Compile Include="Core\UI\MvpViewController.cs" />
+    <Compile Include="Core\UI\UIAlertHelper.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Core\UI\TouchNavigator.cs" />
     <Compile Include="ViewControllers\FacebookDetailViewController.cs" />
+    <Compile Include="ViewControllers\Elements\WebsiteEntryElement.cs" />
+    <Compile Include="ViewControllers\TicketViewController.cs" />
     <Compile Include="ViewControllers\Elements\FacebookEntryElement.cs" />
-    <Compile Include="ViewControllers\Tab3ViewController.cs" />
-    <Compile Include="ViewControllers\Tab2ViewController.cs" />
-    <Compile Include="ViewControllers\HomeViewController.cs" />
+    <Compile Include="ViewControllers\InfoViewController.cs" />
+    <Compile Include="ViewControllers\LineupViewController.cs" />
+    <Compile Include="ViewControllers\NewsViewController.cs" />
     <Compile Include="MainViewController.cs" />
+    <Compile Include="ViewControllers\WebsiteDetailViewController.cs" />
+    <None Include="..\IcucApp.Core\packages.config">
+      <Link>packages.config</Link>
+    </None>
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -101,12 +260,6 @@
     <BundleResource Include="Resources\Default.png" />
     <BundleResource Include="Resources\Default%402x.png" />
     <BundleResource Include="Resources\Default-568h%402x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\IcucApp.Core\IcucApp.Core.Touch.csproj">
-      <Project>{EBB89E52-76DE-45D3-87BD-3BF35E4914B0}</Project>
-      <Name>IcucApp.Core.Touch</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AlertView">
@@ -126,8 +279,12 @@
     <Reference Include="Xamarin.Social.iOS">
       <HintPath>..\Components\xamarin.social-1.0.2\lib\ios\Xamarin.Social.iOS.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp.MonoTouch">
+      <HintPath>..\ExternalBin\Touch\RestSharp.MonoTouch.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Core\UI\Dialog\" />
     <Folder Include="ViewControllers\Views\" />
   </ItemGroup>
   <ItemGroup>
@@ -153,4 +310,9 @@
     <BundleResource Include="Resources\house.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ProjectLinkReference="8b8d8b0a-a2c1-4373-8149-a1a031cf7f77" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

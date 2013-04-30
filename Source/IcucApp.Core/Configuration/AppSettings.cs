@@ -1,18 +1,14 @@
-﻿using System;
+﻿using IcucApp.Core.Configuration;
 
-namespace IcucApp.Core.Configuration
+namespace IcucApp.Configuration
 {
     public class AppSettings : AppSettingsBase
     {
-        // ReSharper disable UnusedAutoPropertyAccessor.Local
-
         [BundleKey("App.ServerUrl")]
-        public string ServerBaseUrl { get; private set; }
+        public string ServerBaseUrl { get; set; }
 
         public AppSettings()
         {
         }
     }
-
-    // ReSharper restore UnusedAutoPropertyAccessor.Local
 }

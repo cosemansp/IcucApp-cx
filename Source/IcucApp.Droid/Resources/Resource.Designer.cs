@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: Android.Runtime.ResourceDesignerAttribute("IcucApp.Droid.Resource", IsApplication=true)]
+[assembly: Android.Runtime.ResourceDesignerAttribute("IcucApp.Resource", IsApplication=true)]
 
-namespace IcucApp.Droid
+namespace IcucApp
 {
 	
 	

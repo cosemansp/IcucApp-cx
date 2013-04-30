@@ -1,4 +1,4 @@
-﻿using IcucApp.Core.Services.Facebook;
+﻿using IcucApp.Services.Facebook;
 using NUnit.Framework;
 
 namespace IcucApp.Core.Tests.Services.Facebook

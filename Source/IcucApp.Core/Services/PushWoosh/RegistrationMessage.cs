@@ -1,4 +1,4 @@
-namespace IcucApp.Core.Services.PushWoosh
+namespace IcucApp.Services.PushWoosh
 {
     public class RegistrationMessage
     {
@@ -7,6 +7,8 @@ namespace IcucApp.Core.Services.PushWoosh
             request = new RegistrationPayload(application, deviceToken, hwid);
         }
 
+        // ReSharper disable InconsistentNaming
         public RegistrationPayload request { get; set; }
+        // ReSharper restore InconsistentNaming
     }
 }

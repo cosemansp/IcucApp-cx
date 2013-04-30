@@ -9,7 +9,7 @@
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IcucApp.Droid</RootNamespace>
+    <RootNamespace>IcucApp</RootNamespace>
     <AssemblyName>IcucApp.Droid</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidApplication>true</AndroidApplication>
@@ -29,7 +29,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -51,11 +50,163 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\IcucApp.Core\Configuration\AppSettings.cs">
+      <Link>Configuration\AppSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Configuration\UserSettings.cs">
+      <Link>Configuration\UserSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\CoreRegistration.cs">
+      <Link>CoreRegistration.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\CacheStore.cs">
+      <Link>Core\CacheStore.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Configuration\AppSettingsBase.cs">
+      <Link>Core\Configuration\AppSettingsBase.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Configuration\ConfigurartionManager.cs">
+      <Link>Core\Configuration\ConfigurartionManager.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Configuration\InvalidConfigurationException.cs">
+      <Link>Core\Configuration\InvalidConfigurationException.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Configuration\UserSettingsBase.cs">
+      <Link>Core\Configuration\UserSettingsBase.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Device.cs">
+      <Link>Core\Device.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Diagnostics\ConsoleAppender.cs">
+      <Link>Core\Diagnostics\ConsoleAppender.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Diagnostics\LogManager.cs">
+      <Link>Core\Diagnostics\LogManager.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Dispatcher.cs">
+      <Link>Core\Dispatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Display.cs">
+      <Link>Core\Display.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\IMapper.cs">
+      <Link>Core\IMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Ioc\Container.cs">
+      <Link>Core\Ioc\Container.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Ioc\ContainerExtensions.cs">
+      <Link>Core\Ioc\ContainerExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Ioc\TinyIoc.cs">
+      <Link>Core\Ioc\TinyIoc.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\JsonExtensions.cs">
+      <Link>Core\JsonExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Net\CommunicationException.cs">
+      <Link>Core\Net\CommunicationException.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\Net\NetworkActivityIndicator.cs">
+      <Link>Core\Net\NetworkActivityIndicator.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\StringExtensions.cs">
+      <Link>Core\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\TinyMessenger.cs">
+      <Link>Core\TinyMessenger.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\UI\INavigator.cs">
+      <Link>Core\UI\INavigator.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\UI\IPresenter.cs">
+      <Link>Core\UI\IPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\UI\IView.cs">
+      <Link>Core\UI\IView.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\WebBrowser.cs">
+      <Link>Core\WebBrowser.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\FacebookDetailPresenter.cs">
+      <Link>Presentation\FacebookDetailPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\InfoPresenter.cs">
+      <Link>Presentation\InfoPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\LineupPresenter.cs">
+      <Link>Presentation\LineupPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\Mappers\FeedEntryMapper.cs">
+      <Link>Presentation\Mappers\FeedEntryMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\NewsPresenter.cs">
+      <Link>Presentation\NewsPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\TicketPresenter.cs">
+      <Link>Presentation\TicketPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\FacebookDetailModel.cs">
+      <Link>Presentation\ViewModels\FacebookDetailModel.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\InfoViewModel.cs">
+      <Link>Presentation\ViewModels\InfoViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\LineupViewModel.cs">
+      <Link>Presentation\ViewModels\LineupViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\NewsViewModel.cs">
+      <Link>Presentation\ViewModels\NewsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\TicketModel.cs">
+      <Link>Presentation\ViewModels\TicketModel.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\WebsiteDetailModel.cs">
+      <Link>Presentation\ViewModels\WebsiteDetailModel.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\WebsiteDetailPresenter.cs">
+      <Link>Presentation\WebsiteDetailPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\Facebook\FacebookFeedAgent.cs">
+      <Link>Services\Facebook\FacebookFeedAgent.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\IPushWooshAgent.cs">
+      <Link>Services\PushWoosh\IPushWooshAgent.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\PushWooshAgent.cs">
+      <Link>Services\PushWoosh\PushWooshAgent.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\PushWooshException.cs">
+      <Link>Services\PushWoosh\PushWooshException.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\RegistrationMessage.cs">
+      <Link>Services\PushWoosh\RegistrationMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\RegistrationPayload.cs">
+      <Link>Services\PushWoosh\RegistrationPayload.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\SetTagsMessage.cs">
+      <Link>Services\PushWoosh\SetTagsMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\SetTagsPayload.cs">
+      <Link>Services\PushWoosh\SetTagsPayload.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\SetTagsResultMessage.cs">
+      <Link>Services\PushWoosh\SetTagsResultMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Services\PushWoosh\StatusMessage.cs">
+      <Link>Services\PushWoosh\StatusMessage.cs</Link>
+    </Compile>
     <Compile Include="Activity1.cs" />
+    <Compile Include="Core\DispatcherDroid.cs" />
+    <Compile Include="Diagnostics\AndroidLogAppender.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\IcucApp.Core\packages.config">
+      <Link>packages.config</Link>
+    </None>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
@@ -71,7 +222,13 @@
   <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="8b8d8b0a-a2c1-4373-8149-a1a031cf7f77" />
+    </VisualStudio>
+  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

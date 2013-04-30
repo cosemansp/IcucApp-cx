@@ -4,7 +4,7 @@ using IcucApp.Core.Diagnostics;
 using IcucApp.Core.Net;
 using RestSharp;
 
-namespace IcucApp.Core.Services.Facebook
+namespace IcucApp.Services.Facebook
 {
     public interface IFacebookFeedAgent
     {

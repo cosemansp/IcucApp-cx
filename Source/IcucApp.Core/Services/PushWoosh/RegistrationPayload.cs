@@ -1,4 +1,4 @@
-namespace IcucApp.Core.Services.PushWoosh
+namespace IcucApp.Services.PushWoosh
 {
     public class RegistrationPayload
     {
@@ -16,11 +16,13 @@ namespace IcucApp.Core.Services.PushWoosh
             language = "nl";
         }
 
+        // ReSharper disable InconsistentNaming
         public string application { get; private set; }
         public int device_type { get; private set; }
         public string push_token { get; private set; }
         public string language { get; private set; }
         public string hwid { get; private set; }
         public double timezone { get; private set; }
+        // ReSharper restore InconsistentNaming
     }
 }

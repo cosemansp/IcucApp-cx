@@ -1,7 +1,7 @@
 ﻿using IcucApp.Core.Ioc;
-using IcucApp.Core.Mappers;
-using IcucApp.Core.Presentation.ViewModels;
-using IcucApp.Core.Services.Facebook;
+using IcucApp.Presentation.Mappers;
+using IcucApp.Presentation.ViewModels;
+using IcucApp.Services.Facebook;
 
 namespace IcucApp.Core
 {

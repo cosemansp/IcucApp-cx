@@ -8,7 +8,7 @@
     <ProjectGuid>{8B8D8B0A-A2C1-4373-8149-A1A031CF7F77}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IcucApp.Core</RootNamespace>
+    <RootNamespace>IcucApp</RootNamespace>
     <AssemblyName>IcucApp.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -55,9 +55,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Diagnostics\LogManager.cs" />
-    <Compile Include="Net\CommunicationException.cs" />
-    <Compile Include="Net\NetworkActivityIndicator.cs" />
+    <Compile Include="Core\CacheStore.cs" />
+    <Compile Include="Configuration\AppSettings.cs" />
+    <Compile Include="Core\Configuration\AppSettingsBase.cs" />
+    <Compile Include="Core\Configuration\ConfigurartionManager.cs" />
+    <Compile Include="Core\Configuration\InvalidConfigurationException.cs" />
+    <Compile Include="Configuration\UserSettings.cs" />
+    <Compile Include="Core\Configuration\UserSettingsBase.cs" />
+    <Compile Include="CoreRegistration.cs" />
+    <Compile Include="Core\Device.cs" />
+    <Compile Include="Core\Diagnostics\ConsoleAppender.cs" />
+    <Compile Include="Core\Diagnostics\LogManager.cs" />
+    <Compile Include="Core\Ioc\Container.cs" />
+    <Compile Include="Core\Ioc\ContainerExtensions.cs" />
+    <Compile Include="Core\Ioc\TinyIoc.cs" />
+    <Compile Include="Core\Net\CommunicationException.cs" />
+    <Compile Include="Core\Net\NetworkActivityIndicator.cs" />
+    <Compile Include="Core\Dispatcher.cs" />
+    <Compile Include="Core\Display.cs" />
+    <Compile Include="Core\IMapper.cs" />
+    <Compile Include="Core\JsonExtensions.cs" />
+    <Compile Include="Presentation\FacebookDetailPresenter.cs" />
+    <Compile Include="Presentation\Mappers\FeedEntryMapper.cs" />
+    <Compile Include="Presentation\TicketPresenter.cs" />
+    <Compile Include="Core\UI\INavigator.cs" />
+    <Compile Include="Core\UI\IPresenter.cs" />
+    <Compile Include="Core\UI\IView.cs" />
+    <Compile Include="Presentation\NewsPresenter.cs" />
+    <Compile Include="Presentation\LineupPresenter.cs" />
+    <Compile Include="Presentation\InfoPresenter.cs" />
+    <Compile Include="Presentation\ViewModels\FacebookDetailModel.cs" />
+    <Compile Include="Presentation\ViewModels\NewsViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\LineupViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\InfoViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\TicketModel.cs" />
+    <Compile Include="Presentation\ViewModels\WebsiteDetailModel.cs" />
+    <Compile Include="Presentation\WebsiteDetailPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Facebook\FacebookFeedAgent.cs" />
     <Compile Include="Services\PushWoosh\IPushWooshAgent.cs" />
@@ -69,11 +102,14 @@
     <Compile Include="Services\PushWoosh\SetTagsPayload.cs" />
     <Compile Include="Services\PushWoosh\SetTagsResultMessage.cs" />
     <Compile Include="Services\PushWoosh\StatusMessage.cs" />
-    <Compile Include="Services\WebBrowser.cs" />
+    <Compile Include="Core\WebBrowser.cs" />
+    <Compile Include="Core\StringExtensions.cs" />
+    <Compile Include="Core\TinyMessenger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

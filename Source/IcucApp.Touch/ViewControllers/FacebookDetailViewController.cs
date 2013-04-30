@@ -1,10 +1,11 @@
-using IcucApp.Core.Presentation;
-using IcucApp.Core.Presentation.ViewModels;
-using IcucApp.Core.Touch.UIKit;
 
-namespace IcucApp.Touch.ViewControllers
+using IcucApp.Core.UI;
+using IcucApp.Presentation;
+using IcucApp.Presentation.ViewModels;
+
+namespace IcucApp.ViewControllers
 {
-    public class FacebookDetailViewController : MvpViewController<FacebookDetailPresenter>, IFacebookDetailView
+    public class FacebookDetailViewController : MvpViewController<TicketPresenter>, ITicketView
     {
         public FacebookDetailViewController(string context)
         {
@@ -26,7 +27,7 @@ namespace IcucApp.Touch.ViewControllers
             Presenter.OnViewShown();
         }
 
-        public void DataBind(FacebookDetailModel model)
+        public void DataBind(TicketModel model)
         {
         }
     }

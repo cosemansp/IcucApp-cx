@@ -1,14 +1,17 @@
 ﻿using System.Net;
+using IcucApp.Configuration;
 using IcucApp.Core;
 using IcucApp.Core.Configuration;
 using IcucApp.Core.Diagnostics;
 using IcucApp.Core.Ioc;
-using IcucApp.Core.Presentation;
-using IcucApp.Core.Services;
-using IcucApp.Touch.ViewControllers;
+using IcucApp.Core.UI;
+using IcucApp.Presentation;
+using IcucApp.Touch;
+using IcucApp.Touch.Core;
+using IcucApp.ViewControllers;
 using MonoTouch.UIKit;
 
-namespace IcucApp.Touch
+namespace IcucApp
 {
     public class BootStrapper
     {
@@ -45,7 +48,7 @@ namespace IcucApp.Touch
                 container.RegisterModule(new CoreRegistration());
 
                 // local services
-                container.Register<IDispatcher>(new Dispatcher(appDelegate));
+                container.Register<IDispatcher>(new DispatcherTouch(appDelegate));
                 container.Register<INavigator>(new TouchNavigator(app));
                 //container.Register<IFileSystem, TouchFileSystem>().AsSingleton();
                 //container.Register<IAssets, TouchAssets>().AsSingleton();
@@ -56,6 +59,7 @@ namespace IcucApp.Touch
             // define routes
             //
             RouteConfig.MapRoute<FacebookDetailPresenter>("FacebookDetail", context => new FacebookDetailViewController(context), true);
+			RouteConfig.MapRoute<WebsiteDetailPresenter>("WebsiteDetail", context => new WebsiteDetailViewController(context), true);
         }
     }
 }
