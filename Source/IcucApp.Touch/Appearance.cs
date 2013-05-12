@@ -6,8 +6,12 @@ namespace IcucApp.Touch
     {
          public static void Configure()
          {
+
+			UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.BlackTranslucent, true);
+
              // setup tint and font
-             UINavigationBar.AppearanceWhenContainedIn(typeof(UINavigationController)).TintColor = UIColor.Black;
+			 //UITabBar.Appearance.TintColor = UIColor.Green;
+             //UINavigationBar.AppearanceWhenContainedIn(typeof(UINavigationController)).TintColor = UIColor.Green;
              //UITabBar.Appearance.TintColor = AppStyle.Color.NavBarTint;
              //UIActionSheet.Appearance.BackgroundColor = AppStyle.Color.NavBarTint;
 

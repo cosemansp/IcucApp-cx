@@ -5,6 +5,7 @@ using IcucApp.Presentation.ViewModels;
 using IcucApp.ViewControllers.Elements;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
+using BigTed;
 
 namespace IcucApp.ViewControllers
 {
@@ -13,8 +14,9 @@ namespace IcucApp.ViewControllers
 		UISegmentedControl _segmentedControl;
 
         public NewsViewController()
-            : base(UITableViewStyle.Plain)
+            : base(UITableViewStyle.Grouped)
         {
+			EnableRefresh();
         }
 
         public override void ViewDidLoad()
@@ -24,7 +26,7 @@ namespace IcucApp.ViewControllers
 			_segmentedControl = new UISegmentedControl(new object[] {"Facebook", "Website"});
 			_segmentedControl.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
 			_segmentedControl.ControlStyle = UISegmentedControlStyle.Bar;
-			_segmentedControl.TintColor = UIColor.Gray;
+			// _segmentedControl.TintColor = UIColor.Gray;
 			_segmentedControl.Frame = new System.Drawing.RectangleF(0, 0, 200, 30);
 			_segmentedControl.SelectedSegment = 0;
 			_segmentedControl.ValueChanged += (object sender, System.EventArgs e) => {
@@ -59,6 +61,13 @@ namespace IcucApp.ViewControllers
 
             rootElement.Add(section);
             Root = rootElement;
+
+			if (model.IsLoading) {
+				BTProgressHUD.Show("Loading...");
+			}
+			else {
+				BTProgressHUD.Dismiss();
+			}
         }
     }
 }

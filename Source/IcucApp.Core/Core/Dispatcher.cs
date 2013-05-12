@@ -30,7 +30,7 @@ namespace IcucApp.Core
                             }
                             catch (Exception exception)
                             {
-                                finishedCallback.Invoke(result, exception);
+                                // finishedCallback.Invoke(result, exception);
                             }
                         });
                     }

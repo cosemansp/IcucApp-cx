@@ -5,6 +5,7 @@ using IcucApp.Core.Diagnostics;
 using IcucApp.Core.UI;
 using IcucApp.Presentation.ViewModels;
 using IcucApp.Services.Facebook;
+using IcucApp.Services.Syndication;
 
 namespace IcucApp.Presentation
 {
@@ -17,22 +18,31 @@ namespace IcucApp.Presentation
     {
         private readonly INewsView _view;
         private readonly IDispatcher _dispatcher;
-        private readonly IFacebookFeedAgent _agent;
+        private readonly IFacebookFeedAgent _facebookAgent;
+		private readonly IWordpressFeedAgent _websiteAgent;
         private readonly INavigator _navigator;
-        private readonly IMapper<FeedEntry, FeedData> _mapper;
+        private readonly IMapper<FacebookEntry, FeedData> _facebookMapper;
+		private readonly IMapper<WordpressEntry, FeedData> _wordpressMapper;
+
         private readonly ILog _log = LogManager.GetLogger(typeof(NewsPresenter).Name);
+		int _segment;
 
         public NewsPresenter(INewsView view, 
                              IDispatcher dispatcher, 
-                             IFacebookFeedAgent agent,
+                             IFacebookFeedAgent facebookAgent,
+		                     IWordpressFeedAgent websiteAgent,
                              INavigator navigator,
-                             IMapper<FeedEntry, FeedData> mapper )
+                             IMapper<FacebookEntry, FeedData> facebookMapper,
+		                     IMapper<WordpressEntry, FeedData> wordpressMapper)
         {
+			_websiteAgent = websiteAgent;
             _view = view;
             _dispatcher = dispatcher;
-            _agent = agent;
+            _facebookAgent = facebookAgent;
             _navigator = navigator;
-            _mapper = mapper;
+			_facebookMapper = facebookMapper;
+			_wordpressMapper = wordpressMapper;
+			_segment = 0;
         }
 
         public void Initialize()
@@ -41,33 +51,38 @@ namespace IcucApp.Presentation
 
         public void OnViewShown()
         {
-            _dispatcher.ExecuteAsync(LoadData, FinishedLoading);
-
-            DataBindView(null);
+			if (_segment == 0) {
+				LoadAndBindFacebookFeed();
+			}
+			if (_segment == 1) {
+				LoadAndBindWebsiteNews();
+			}
         }
 
-        private void FinishedLoading(FeedsMessage result, Exception exception)
+        private void FinishedFacebookLoading(FacebookMessage result, Exception exception)
         {
-			if (CacheStore.Exists<List<FeedEntry>>("facebookFeeds")) {
-            	CacheStore.Remove<List<FeedEntry>>("facebookFeeds");
+			if (exception != null) {
+				_log.ErrorFormat("failed to load data: {0}", exception.Message);
+				return;
 			}
-            CacheStore.Add("facebookFeeds", result.entries);
+
+            CacheStore.Set("facebookFeeds", result);
             DataBindView(result.entries);
         }
 
-        private FeedsMessage LoadData()
+        private FacebookMessage LoadFacebookData()
         {
-            return _agent.GetFeeds("441615792534282" /* icuc feedId */);
+            return _facebookAgent.GetFeeds("441615792534282" /* icuc feedId */);
         }
 
-        private void DataBindView(IEnumerable<FeedEntry> entries)
+        private void DataBindView(IEnumerable<FacebookEntry> entries)
         {
             var model = new NewsViewModel();
 			if (entries != null) 
 			{
 	            foreach (var feedEntry in entries)
 	            {
-	                model.Entries.Add(_mapper.Map(feedEntry));
+	                model.Entries.Add(_facebookMapper.Map(feedEntry));
 	            }
 			}
             _view.DataBind(model);
@@ -79,7 +94,15 @@ namespace IcucApp.Presentation
 
 		public void OpenNewsFeed (int selectedSegment)
 		{
-			// throw new System.NotImplementedException ();
+			if (selectedSegment == 0) {
+				LoadAndBindFacebookFeed();
+			}
+
+			if (selectedSegment == 1) {
+				LoadAndBindWebsiteNews();
+			}
+
+			_segment = selectedSegment;
 		}
 
         public void OnClickedFacebookFeed(string feedId)
@@ -91,5 +114,63 @@ namespace IcucApp.Presentation
         {
             _navigator.PushPresenter<WebsiteDetailPresenter>(_view, feedId);
         }
+
+		public void Refresh ()
+		{
+			throw new System.NotImplementedException ();
+		}
+
+		void LoadAndBindFacebookFeed ()
+		{
+			var data = CacheStore.Get<FacebookMessage>("facebookFeeds");
+			if (data == null)
+			{
+				_dispatcher.ExecuteAsync(LoadFacebookData, FinishedFacebookLoading);
+				_view.DataBind(NewsViewModel.Loading);
+				return;
+			}
+			DataBindView(data.entries);
+		}
+
+		void LoadAndBindWebsiteNews ()
+		{
+			var data = CacheStore.Get<WordpressMessage>("websiteFeeds");
+			if (data == null)
+			{
+				_dispatcher.ExecuteAsync(LoadWebsiteData, FinishedWebsiteLoading);
+				_view.DataBind(NewsViewModel.Loading);
+				return;
+			}
+			DataBindView(data.Entries);
+		}
+
+		WordpressMessage LoadWebsiteData() {
+			return _websiteAgent.GetFeeds("2013/category/app-news");
+		}
+
+		private void FinishedWebsiteLoading(WordpressMessage result, Exception exception)
+		{
+			if (exception != null) {
+				_log.ErrorFormat("failed to load data: {0}", exception.Message);
+				return;
+			}
+			
+			CacheStore.Set("websiteFeeds", result);
+			DataBindView(result.Entries);
+		}
+
+		private void DataBindView(IEnumerable<WordpressEntry> entries)
+		{
+			var model = new NewsViewModel();
+			if (entries != null) 
+			{
+				foreach (var websiteEntry in entries)
+				{
+					model.Entries.Add(_wordpressMapper.Map(websiteEntry));
+				}
+			}
+			_view.DataBind(model);
+		}
+
     }
 }

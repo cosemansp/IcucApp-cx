@@ -16,22 +16,22 @@ namespace IcucApp
 
             // Add news page tab
             var newsTab = new UINavigationController(new NewsViewController());
-            newsTab.TabBarItem = new UITabBarItem("Home", UIImage.FromBundle("house"), 1);
+            newsTab.TabBarItem = new UITabBarItem("Nieuws", UIImage.FromBundle("house"), 1);
             tabs.Add(newsTab);
 
             // Add line-up tab
             var regionalNewsTab = new UINavigationController(new LineupViewController());
-            regionalNewsTab.TabBarItem = new UITabBarItem("Tab2", UIImage.FromBundle("fire_02"), 2);
+            regionalNewsTab.TabBarItem = new UITabBarItem("Lineup", UIImage.FromBundle("fire_02"), 2);
             tabs.Add(regionalNewsTab);
 
             // Add info tab
             var settingsTab = new UINavigationController(new InfoViewController());
-            settingsTab.TabBarItem = new UITabBarItem("Tab3", UIImage.FromBundle("clapboard"), 3);
+            settingsTab.TabBarItem = new UITabBarItem("Info", UIImage.FromBundle("clapboard"), 3);
             tabs.Add(settingsTab);
 
             // Add info tab
             var ticketTab = new UINavigationController(new TicketViewController());
-            ticketTab.TabBarItem = new UITabBarItem("Tab4", UIImage.FromBundle("clapboard"), 4);
+            ticketTab.TabBarItem = new UITabBarItem("Ticket", UIImage.FromBundle("clapboard"), 4);
             tabs.Add(ticketTab);
 
             // Assign to view controllers.

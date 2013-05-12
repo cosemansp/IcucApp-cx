@@ -31,6 +31,7 @@ namespace IcucApp.Presentation
         private void DataBindView()
         {
             var model = new TicketModel();
+			model.Url = "https://m.ticketscript.com/channel/web2/start-order/rid/3JB82HDY/language/nl";
             _view.DataBind(model);
         }
 

@@ -2,6 +2,7 @@
 using IcucApp.Presentation.Mappers;
 using IcucApp.Presentation.ViewModels;
 using IcucApp.Services.Facebook;
+using IcucApp.Services.Syndication;
 
 namespace IcucApp.Core
 {
@@ -14,9 +15,11 @@ namespace IcucApp.Core
 
             // agents 
             container.Register<IFacebookFeedAgent, FacebookFeedAgent>();
+			container.Register<IWordpressFeedAgent>(new WordpressFeedAgent("http://icuc.be"));
 
             // mappers
-            container.Register<IMapper<FeedEntry, FeedData>, FeedEntryMapper>();
+            container.Register<IMapper<FacebookEntry, FeedData>, FacebookEntryMapper>();
+			container.Register<IMapper<WordpressEntry, FeedData>, WordpressEntryMapper>();
 
             //container.Register<IAnalyticsTracker, AnalyticsTracker>().AsSingleton();
             //container.Register<IWebBrowser, WebBrowser>().AsSingleton();

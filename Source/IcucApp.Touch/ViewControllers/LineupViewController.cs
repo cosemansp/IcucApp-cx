@@ -1,8 +1,11 @@
+using IcucApp.Core;
 using IcucApp.Core.UI;
 using IcucApp.Presentation;
 using IcucApp.Presentation.ViewModels;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
+using IcucApp.ViewControllers.Elements;
+using BigTed;
 
 namespace IcucApp.ViewControllers
 {
@@ -11,6 +14,7 @@ namespace IcucApp.ViewControllers
         public LineupViewController()
             : base(UITableViewStyle.Plain)
         {
+			EnableRefresh();
         }
 
         public override void ViewDidLoad()
@@ -31,8 +35,25 @@ namespace IcucApp.ViewControllers
 
         public void DataBind(LineupViewModel model)
         {
-            var rootElement = new RootElement("Line up");
-            Root = rootElement;
+			var rootElement = new RootElement("Line-up");
+			var section = new Section();
+			foreach (var entry in model.Entries)
+			{
+				if (entry.Title.Trim(" ".ToCharArray()).IsNullOrEmpty())
+					continue;
+				var element = new LineupEntryElement(entry.Title);
+				section.Add(element);
+			}
+			
+			rootElement.Add(section);
+			Root = rootElement;
+			
+			if (model.IsLoading) {
+				BTProgressHUD.Show("Loading...");
+			}
+			else {
+				BTProgressHUD.Dismiss();
+			}
         }
 
     }

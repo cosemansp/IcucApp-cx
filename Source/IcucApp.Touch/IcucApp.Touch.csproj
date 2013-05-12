@@ -171,8 +171,11 @@
     <Compile Include="..\IcucApp.Core\Presentation\LineupPresenter.cs">
       <Link>Presentation\LineupPresenter.cs</Link>
     </Compile>
-    <Compile Include="..\IcucApp.Core\Presentation\Mappers\FeedEntryMapper.cs">
-      <Link>Presentation\Mappers\FeedEntryMapper.cs</Link>
+    <Compile Include="..\IcucApp.Core\Presentation\Mappers\FacebookEntryMapper.cs">
+      <Link>Presentation\Mappers\FacebookEntryMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\Mappers\WordpressEntryMapper.cs">
+      <Link>Presentation\Mappers\WordpressEntryMapper.cs</Link>
     </Compile>
     <Compile Include="..\IcucApp.Core\Presentation\NewsPresenter.cs">
       <Link>Presentation\NewsPresenter.cs</Link>
@@ -231,6 +234,9 @@
     <Compile Include="..\IcucApp.Core\Services\PushWoosh\StatusMessage.cs">
       <Link>Services\PushWoosh\StatusMessage.cs</Link>
     </Compile>
+    <Compile Include="..\IcucApp.Core\Services\Syndication\WordpressFeedAgent.cs">
+      <Link>Services\Syndication\WordpressFeedAgent.cs</Link>
+    </Compile>
     <Compile Include="Appearance.cs" />
     <Compile Include="BootStrapper.cs" />
     <Compile Include="Core\DispatcherTouch.cs" />
@@ -255,11 +261,18 @@
     </None>
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewControllers\Elements\LineupEntryElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default.png" />
     <BundleResource Include="Resources\Default%402x.png" />
     <BundleResource Include="Resources\Default-568h%402x.png" />
+    <BundleResource Include="Resources\Icon.png" />
+    <BundleResource Include="Resources\Icon%402x.png" />
+    <BundleResource Include="Resources\Icon-72.png" />
+    <BundleResource Include="Resources\Icon-Small.png" />
+    <BundleResource Include="Resources\Icon-Small%402x.png" />
+    <BundleResource Include="Resources\Icon-Small-50.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AlertView">
@@ -282,6 +295,7 @@
     <Reference Include="RestSharp.MonoTouch">
       <HintPath>..\ExternalBin\Touch\RestSharp.MonoTouch.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\UI\Dialog\" />
@@ -312,7 +326,11 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkReference="8b8d8b0a-a2c1-4373-8149-a1a031cf7f77" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="8b8d8b0a-a2c1-4373-8149-a1a031cf7f77" />
     </VisualStudio>
   </ProjectExtensions>
+  <ItemGroup>
+    <ITunesArtwork Include="iTunesArtwork" />
+    <ITunesArtwork Include="iTunesArtwork%402x" />
+  </ItemGroup>
 </Project>

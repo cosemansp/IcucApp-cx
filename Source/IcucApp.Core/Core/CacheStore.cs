@@ -27,12 +27,11 @@ namespace IcucApp.Core
         /// <typeparam name="T">Type of object</typeparam>
         /// <param name="key">Name of key in cache</param>
         /// <returns>True, if yes; False, otherwise</returns>
-        public static bool Exists<T>(string key) where T : class
+        public static bool Exists(string key)
         {
-            Type type = typeof(T);
             lock (Sync)
             {
-                return Cache.ContainsKey(type.Name + key);
+                return Cache.ContainsKey(key);
             }
         }
 
@@ -70,6 +69,28 @@ namespace IcucApp.Core
             }
         }
 
+		/// <summary>
+		/// Load an object from cache
+		/// Throws an exception when not found
+		/// </summary>
+		/// <typeparam name="T">Type of object</typeparam>
+		/// <param name="key">Name of key in cache</param>
+		/// <returns>Object from cache</returns>
+		public static T Load<T>(string key) where T : class
+		{
+			Type type = typeof(T);
+			lock (Sync)
+			{
+				if (Cache.ContainsKey(key) == false)
+					throw new ApplicationException(String.Format("An object with key '{0}' does not exists", key));
+				
+				lock (Sync)
+				{
+					return (T)Cache[key];
+				}
+			}
+		}
+
         /// <summary>
         /// Get an object from cache
         /// </summary>
@@ -81,12 +102,12 @@ namespace IcucApp.Core
             Type type = typeof(T);
             lock (Sync)
             {
-                if (Cache.ContainsKey(key + type.Name) == false)
-                    throw new ApplicationException(String.Format("An object with key '{0}' does not exists", key));
+                if (Cache.ContainsKey(key) == false)
+					return default(T);
 
                 lock (Sync)
                 {
-                    return (T)Cache[key + type.Name];
+                    return (T)Cache[key];
                 }
             }
         }
@@ -102,12 +123,12 @@ namespace IcucApp.Core
             T value = (T)Activator.CreateInstance(type, constructorParameters);
             lock (Sync)
             {
-                if (Cache.ContainsKey(key + type.Name))
+                if (Cache.ContainsKey(key))
                     throw new ApplicationException(String.Format("An object with key '{0}' already exists", key));
 
                 lock (Sync)
                 {
-                    Cache.Add(key + type.Name, value);
+                    Cache.Add(key, value);
                 }
             }
             return value;
@@ -138,22 +159,28 @@ namespace IcucApp.Core
 
         public static void Add<T>(string key, T value)
         {
-            Type type = typeof(T);
-            if (value.GetType() != type)
-                throw new ApplicationException(String.Format("The type of value passed to cache {0} does not match the cache type {1} for key {2}", value.GetType().FullName, type.FullName, key));
-
             lock (Sync)
             {
-                if (Cache.ContainsKey(key + type.Name))
+                if (Cache.ContainsKey(key))
                     throw new ApplicationException(String.Format("An object with key '{0}' already exists", key));
 
                 lock (Sync)
                 {
-                    Cache.Add(key + type.Name, value);
+                    Cache.Add(key, value);
                 }
             }
         }
 
+		public static void Set<T>(string key, T value)
+		{
+			lock (Sync)
+			{
+				if (Cache.ContainsKey(key))
+					Cache.Remove(key);
+
+				Cache.Add(key, value);
+			}
+		}
 
         /// <summary>
         /// Remove an object type from cache
@@ -180,17 +207,16 @@ namespace IcucApp.Core
         /// </summary>
         /// <typeparam name="T">Type of object</typeparam>
         /// <param name="key">Key of the object</param>
-        public static void Remove<T>(string key)
+        public static void Remove(string key)
         {
-            Type type = typeof(T);
             lock (Sync)
             {
-                if (Cache.ContainsKey(key + type.Name) == false)
-                    throw new ApplicationException(String.Format("An object with key '{0}' does not exists in cache", key));
+                if (Cache.ContainsKey(key) == false)
+					return; // ignore when not exist
 
                 lock (Sync)
                 {
-                    Cache.Remove(key + type.Name);
+                    Cache.Remove(key);
                 }
             }
         }

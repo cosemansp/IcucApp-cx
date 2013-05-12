@@ -8,7 +8,7 @@ namespace IcucApp.Services.Facebook
 {
     public interface IFacebookFeedAgent
     {
-        FeedsMessage GetFeeds(string feedId);
+        FacebookMessage GetFeeds(string feedId);
     }
 
     /// <summary>
@@ -25,7 +25,7 @@ namespace IcucApp.Services.Facebook
             _uri = new Uri("https://www.facebook.com/feeds/page.php");
         }
 
-        public FeedsMessage GetFeeds(string feedId)
+        public FacebookMessage GetFeeds(string feedId)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace IcucApp.Services.Facebook
                 request.AddParameter("id", feedId);
                 request.AddParameter("format", "json");
 
-                var response = client.Execute<FeedsMessage>(request);
+                var response = client.Execute<FacebookMessage>(request);
 
                 // deserialize
                 return response.Data;
@@ -50,31 +50,34 @@ namespace IcucApp.Services.Facebook
                 _log.WarnFormat("Failed to Feeds: {1} - {0}", ex.GetType().Name, ex.Message);
                 throw;
             }
+			finally {
+				NetworkActivityIndicator.HideActivity();
+			}
         }
     }
 
-    public class FeedsMessage
+    public class FacebookMessage
     {
         // ReSharper disable InconsistentNaming
         public string title { get; set; }
         public string link { get; set; }
-        public List<FeedEntry> entries { get; set; }
+        public List<FacebookEntry> entries { get; set; }
         // ReSharper restore InconsistentNaming
     }
 
-    public class FeedEntry
+    public class FacebookEntry
     {
         // ReSharper disable InconsistentNaming
         public string title { get; set; }
         public string id { get; set; }
         public DateTime published { get; set; }
         public DateTime updated { get; set; }
-        public FeedAuthor author { get; set; }
+        public FacebookAuthor author { get; set; }
         public string content { get; set; }
         // ReSharper restore InconsistentNaming
     }
 
-    public class FeedAuthor
+    public class FacebookAuthor
     {
         // ReSharper disable InconsistentNaming
         public string name { get; set; }

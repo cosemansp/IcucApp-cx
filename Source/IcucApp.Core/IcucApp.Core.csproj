@@ -52,6 +52,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -76,7 +78,8 @@
     <Compile Include="Core\IMapper.cs" />
     <Compile Include="Core\JsonExtensions.cs" />
     <Compile Include="Presentation\FacebookDetailPresenter.cs" />
-    <Compile Include="Presentation\Mappers\FeedEntryMapper.cs" />
+    <Compile Include="Presentation\Mappers\FacebookEntryMapper.cs" />
+    <Compile Include="Presentation\Mappers\WordpressEntryMapper.cs" />
     <Compile Include="Presentation\TicketPresenter.cs" />
     <Compile Include="Core\UI\INavigator.cs" />
     <Compile Include="Core\UI\IPresenter.cs" />
@@ -105,6 +108,7 @@
     <Compile Include="Core\WebBrowser.cs" />
     <Compile Include="Core\StringExtensions.cs" />
     <Compile Include="Core\TinyMessenger.cs" />
+    <Compile Include="Services\Syndication\WordpressFeedAgent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
