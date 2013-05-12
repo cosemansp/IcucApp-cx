@@ -12,7 +12,7 @@ namespace IcucApp.Presentation.Mappers
             {
                 Type = "facebook",
                 Author = source.author.name,
-                Content = source.content,
+				Content = System.Web.HttpUtility.HtmlDecode(source.content),
                 Published = source.published,
 				Title = System.Web.HttpUtility.HtmlDecode(source.title),
                 Updated = source.updated

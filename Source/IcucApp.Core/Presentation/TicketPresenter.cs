@@ -1,6 +1,7 @@
 ﻿using IcucApp.Core.Diagnostics;
 using IcucApp.Core.UI;
 using IcucApp.Presentation.ViewModels;
+using IcucApp.Configuration;
 
 namespace IcucApp.Presentation
 {
@@ -12,11 +13,14 @@ namespace IcucApp.Presentation
     public class TicketPresenter : IPresenter
     {
         private readonly ITicketView _view;
+		private readonly AppSettings _appSetting;
+
         private readonly ILog _log = LogManager.GetLogger(typeof(TicketPresenter).Name);
 
-        public TicketPresenter(ITicketView view) 
+        public TicketPresenter(ITicketView view, AppSettings appSettings) 
         {
             _view = view;
+			_appSetting = appSettings;
         }
 
         public void Initialize()
@@ -31,7 +35,7 @@ namespace IcucApp.Presentation
         private void DataBindView()
         {
             var model = new TicketModel();
-			model.Url = "https://m.ticketscript.com/channel/web2/start-order/rid/3JB82HDY/language/nl";
+			model.Url = _appSetting.TicketUrl;
             _view.DataBind(model);
         }
 

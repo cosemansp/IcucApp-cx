@@ -29,5 +29,15 @@
 		<string>Icon-Small@2x</string>
 		<string>Icon-Small-50</string>
 	</array>
+	<key>App.InfoPageFeed</key>
+	<string></string>
+	<key>App.FacebookFeedUrl</key>
+	<string></string>
+	<key>App.NewsFeedUrl</key>
+	<string></string>
+	<key>App.LineupFeedUrl</key>
+	<string></string>
+	<key>App.TicketUrl</key>
+	<string>https://m.ticketscript.com/channel/web2/start-order/rid/3JB82HDY/language/nl</string>
 </dict>
 </plist>

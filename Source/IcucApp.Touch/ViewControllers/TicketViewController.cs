@@ -59,7 +59,7 @@ namespace IcucApp.ViewControllers
 			};
 
 			_webView.LoadStarted += (sender, e) => {
-				BTProgressHUD.Show("Loading...");
+				BTProgressHUD.Show("Ticketshop wordt geladen...");
 			};
 
 			_webView.LoadFinished += (sender, e) => {

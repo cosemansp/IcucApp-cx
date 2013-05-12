@@ -65,15 +65,21 @@ namespace IcucApp.Presentation
 
 		private void DataBindView(IEnumerable<WordpressEntry> entries)
 		{
-			var model = new LineupViewModel();
-			if (entries != null) 
-			{
-				foreach (var websiteEntry in entries)
+			try {
+				var model = new LineupViewModel();
+				if (entries != null) 
 				{
-					model.Entries.Add(_wordpressMapper.Map(websiteEntry));
+					foreach (var websiteEntry in entries)
+					{
+						model.Entries.Add(_wordpressMapper.Map(websiteEntry));
+					}
 				}
+				_view.DataBind(model);
 			}
-			_view.DataBind(model);
+			catch(Exception ex) {
+				_log.ErrorFormat("failed to bind data: {0}", ex.Message);
+				_view.DataBind(LineupViewModel.Empty);
+			}
 		}
 
         public void OnViewUnloaded()

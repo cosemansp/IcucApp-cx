@@ -63,6 +63,7 @@ namespace IcucApp.Presentation
         {
 			if (exception != null) {
 				_log.ErrorFormat("failed to load data: {0}", exception.Message);
+				_view.DataBind(NewsViewModel.Empty);
 				return;
 			}
 
@@ -82,7 +83,9 @@ namespace IcucApp.Presentation
 			{
 	            foreach (var feedEntry in entries)
 	            {
-	                model.Entries.Add(_facebookMapper.Map(feedEntry));
+					var dataEntry = _facebookMapper.Map(feedEntry);
+					dataEntry.ImageUrl = new Uri("http://graph.facebook.com/{0}/picture".FormatWith("441615792534282"));
+					model.Entries.Add(dataEntry);
 	            }
 			}
             _view.DataBind(model);
@@ -152,6 +155,7 @@ namespace IcucApp.Presentation
 		{
 			if (exception != null) {
 				_log.ErrorFormat("failed to load data: {0}", exception.Message);
+				_view.DataBind(NewsViewModel.Empty);
 				return;
 			}
 			

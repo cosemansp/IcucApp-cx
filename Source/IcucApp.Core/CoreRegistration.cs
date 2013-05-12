@@ -12,6 +12,7 @@ namespace IcucApp.Core
         {
             // system stuff
             container.Register<ITinyMessengerHub, TinyMessengerHub>().AsSingleton();
+			container.Register<IWebBrowser, WebBrowser>();
 
             // agents 
             container.Register<IFacebookFeedAgent, FacebookFeedAgent>();

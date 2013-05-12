@@ -10,6 +10,7 @@ namespace IcucApp.Services.Syndication
     public interface IWordpressFeedAgent
     {
         WordpressMessage GetFeeds(string category);
+		WordpressEntry GetSingleFeed(string path);
     }
 
     public class WordpressFeedAgent : IWordpressFeedAgent
@@ -56,6 +57,40 @@ namespace IcucApp.Services.Syndication
 				NetworkActivityIndicator.HideActivity();
 			}
         }
+
+		public WordpressEntry GetSingleFeed(string path)
+		{
+			try
+			{
+				NetworkActivityIndicator.ShowActivity();
+				
+				// Setup client
+				var client = new RestClient(_baseUrl);
+				client.Timeout = 10 * 1000;
+				
+				// Build request
+				var request = new RestRequest(path, Method.GET);
+				request.AddParameter("feed", "json");
+				request.AddParameter("date_format", "c");
+				request.AddParameter("withoutcomments", "1");
+				var response = client.Execute<List<WordpressEntry>>(request);
+				
+				// error handling
+				if (!response.ErrorMessage.IsNullOrEmpty())
+					throw new InvalidOperationException(response.ErrorMessage);
+				
+				// deserialize
+				return response.Data[0];
+			}
+			catch (Exception ex)
+			{
+				_log.WarnFormat("Failed to Feeds: {1} - {0}", ex.GetType().Name, ex.Message);
+				throw;
+			}
+			finally {
+				NetworkActivityIndicator.HideActivity();
+			}
+		}
     }
 
 	public class WordpressMessage 
@@ -74,6 +109,7 @@ namespace IcucApp.Services.Syndication
         public string permalink { get; set; }
         public string title { get; set; }
         public string excerpt { get; set; }
+		public string content { get; set; }
         public DateTime date { get; set; }
         public string image { get; set; }
         // ReSharper restore InconsistentNaming

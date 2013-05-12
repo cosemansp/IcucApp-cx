@@ -77,6 +77,11 @@
     <Compile Include="Core\Display.cs" />
     <Compile Include="Core\IMapper.cs" />
     <Compile Include="Core\JsonExtensions.cs" />
+    <Compile Include="Core\UI\Web\HtmlHelper.cs" />
+    <Compile Include="Core\UI\Web\HtmlString.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Core\UI\Web\TemplateBase.cs" />
     <Compile Include="Presentation\FacebookDetailPresenter.cs" />
     <Compile Include="Presentation\Mappers\FacebookEntryMapper.cs" />
     <Compile Include="Presentation\Mappers\WordpressEntryMapper.cs" />

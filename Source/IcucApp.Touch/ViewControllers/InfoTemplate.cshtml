@@ -1,0 +1,9 @@
+@using IcucApp.Presentation.ViewModels
+@model InfoViewModel
+@inherits IcucApp.Core.UI.Web.TemplateBase
+<html>
+<body> 
+	<H1>@Model.Title</H1>   
+	@Html.Raw(Model.Content)
+</body>
+</html>

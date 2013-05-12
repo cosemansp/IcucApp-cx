@@ -1,0 +1,17 @@
+feeds
+	http://icuc.be/2013/category/app-lineup/?feed=json
+	http://icuc.be/2013/category/app-news/?feed=json
+
+single 
+	http://icuc.be/2013/app-info/?withoutcomments=1&feed=json
+
+ticketshop
+	https://m.ticketscript.com/channel/web2/start-order/rid/3JB82HDY/language/nl
+
+facebook:
+	https://www.facebook.com/feeds/page.php?id=441615792534282&format=json
+
+	http://graph.facebook.com/{0}/picture
+	http://graph.facebook.com/441615792534282/picture
+
+

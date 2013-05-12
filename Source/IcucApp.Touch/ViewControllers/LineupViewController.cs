@@ -12,7 +12,7 @@ namespace IcucApp.ViewControllers
     public class LineupViewController : MvpDialogViewController<LineupPresenter>, ILineupView
     {
         public LineupViewController()
-            : base(UITableViewStyle.Plain)
+            : base(UITableViewStyle.Grouped)
         {
 			EnableRefresh();
         }
@@ -41,7 +41,7 @@ namespace IcucApp.ViewControllers
 			{
 				if (entry.Title.Trim(" ".ToCharArray()).IsNullOrEmpty())
 					continue;
-				var element = new LineupEntryElement(entry.Title);
+				var element = new LineupEntryElement(entry);
 				section.Add(element);
 			}
 			
@@ -49,7 +49,7 @@ namespace IcucApp.ViewControllers
 			Root = rootElement;
 			
 			if (model.IsLoading) {
-				BTProgressHUD.Show("Loading...");
+				BTProgressHUD.Show("Line-up wordt geladen...");
 			}
 			else {
 				BTProgressHUD.Dismiss();

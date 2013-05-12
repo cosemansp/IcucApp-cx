@@ -72,6 +72,7 @@
     <BuildIpa>True</BuildIpa>
     <AssemblyName>IcucAppTouch</AssemblyName>
     <CodesignProvision>F9E17C1D-1398-4F22-A0B2-013FE4B2879B</CodesignProvision>
+    <DefineConstants>TOUCH</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
     <DebugType>none</DebugType>
@@ -158,6 +159,15 @@
     </Compile>
     <Compile Include="..\IcucApp.Core\Core\UI\IView.cs">
       <Link>Core\UI\IView.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\UI\Web\HtmlHelper.cs">
+      <Link>Core\UI\Web\HtmlHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\UI\Web\HtmlString.cs">
+      <Link>Core\UI\Web\HtmlString.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\UI\Web\TemplateBase.cs">
+      <Link>Core\UI\Web\TemplateBase.cs</Link>
     </Compile>
     <Compile Include="..\IcucApp.Core\Core\WebBrowser.cs">
       <Link>Core\WebBrowser.cs</Link>
@@ -262,6 +272,20 @@
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewControllers\Elements\LineupEntryElement.cs" />
+    <None Include="ViewControllers\InfoTemplate.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>InfoTemplate.cs</LastGenOutput>
+    </None>
+    <Compile Include="ViewControllers\InfoTemplate.cs">
+      <DependentUpon>InfoTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewControllers\Elements\LineupEntryCell.cs" />
+    <Compile Include="Core\UI\UIViewExtensions.cs" />
+    <Compile Include="Core\UI\ImageResizer.cs" />
+    <Compile Include="Core\UI\ImageExtensions.cs" />
+    <Compile Include="ViewControllers\Elements\WebsiteEntryCell.cs" />
+    <Compile Include="Core\UI\UILabelEx.cs" />
+    <Compile Include="ViewControllers\Elements\FacebookEntryCell.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default.png" />
@@ -326,7 +350,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="8b8d8b0a-a2c1-4373-8149-a1a031cf7f77" />
+      <UserProperties ProjectLinkReference="8b8d8b0a-a2c1-4373-8149-a1a031cf7f77" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
     </VisualStudio>
   </ProjectExtensions>
   <ItemGroup>

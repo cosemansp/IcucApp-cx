@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Facebook\FacebookFeedAgentTests.cs" />
-    <Compile Include="Services\Syndication\WpJsonAgentTests.cs" />
+    <Compile Include="Services\Syndication\WordpressAgentTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

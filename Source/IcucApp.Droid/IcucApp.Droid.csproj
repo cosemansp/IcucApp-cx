@@ -125,6 +125,15 @@
     <Compile Include="..\IcucApp.Core\Core\UI\IView.cs">
       <Link>Core\UI\IView.cs</Link>
     </Compile>
+    <Compile Include="..\IcucApp.Core\Core\UI\Web\HtmlHelper.cs">
+      <Link>Core\UI\Web\HtmlHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\UI\Web\HtmlString.cs">
+      <Link>Core\UI\Web\HtmlString.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Core\UI\Web\TemplateBase.cs">
+      <Link>Core\UI\Web\TemplateBase.cs</Link>
+    </Compile>
     <Compile Include="..\IcucApp.Core\Core\WebBrowser.cs">
       <Link>Core\WebBrowser.cs</Link>
     </Compile>

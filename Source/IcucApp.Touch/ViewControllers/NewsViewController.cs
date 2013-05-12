@@ -54,16 +54,23 @@ namespace IcucApp.ViewControllers
             {
                 if (entry.Title.Trim(" ".ToCharArray()).IsNullOrEmpty())
                     continue;
-                var element = new FacebookEntryElement(entry.Title);
-                element.Tapped += () => Presenter.OnClickedFacebookFeed("");
-                section.Add(element);
+				if (entry.Type == "facebook") {
+	                var element = new FacebookEntryElement(entry);
+					element.Tapped += (sender, e) => Presenter.OnClickedFacebookFeed(entry.Id);
+	                section.Add(element);
+				}
+				else {
+					var element = new WebsiteEntryElement(entry);
+					element.Tapped += (sender, e) => Presenter.OnClickedWebsiteFeed(entry.Id);
+					section.Add(element);
+				}
             }
 
             rootElement.Add(section);
             Root = rootElement;
 
 			if (model.IsLoading) {
-				BTProgressHUD.Show("Loading...");
+				BTProgressHUD.Show("Het nieuws wordt geladen...");
 			}
 			else {
 				BTProgressHUD.Dismiss();
