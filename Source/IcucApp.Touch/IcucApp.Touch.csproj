@@ -286,6 +286,7 @@
     <Compile Include="ViewControllers\Elements\WebsiteEntryCell.cs" />
     <Compile Include="Core\UI\UILabelEx.cs" />
     <Compile Include="ViewControllers\Elements\FacebookEntryCell.cs" />
+    <Compile Include="ViewControllers\Elements\WebViewElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default.png" />
@@ -297,6 +298,20 @@
     <BundleResource Include="Resources\Icon-Small.png" />
     <BundleResource Include="Resources\Icon-Small%402x.png" />
     <BundleResource Include="Resources\Icon-Small-50.png" />
+    <BundleResource Include="Resources\home.png" />
+    <BundleResource Include="Resources\home%402x.png" />
+    <BundleResource Include="Resources\info.png" />
+    <BundleResource Include="Resources\info%402x.png" />
+    <BundleResource Include="Resources\star.png" />
+    <BundleResource Include="Resources\star%402x.png" />
+    <BundleResource Include="Resources\ticket.png" />
+    <BundleResource Include="Resources\ticket%402x.png" />
+    <BundleResource Include="Resources\background-568h%402x.png" />
+    <BundleResource Include="Resources\background.png" />
+    <BundleResource Include="Resources\background%402x.png" />
+    <BundleResource Include="Resources\navbar-568h%402x.png" />
+    <BundleResource Include="Resources\navbar.png" />
+    <BundleResource Include="Resources\navbar%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AlertView">
@@ -338,14 +353,6 @@
       <Visible>False</Visible>
       <Version>1.0.2</Version>
     </XamarinComponent>
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\clapboard%402x.png" />
-    <BundleResource Include="Resources\clapboard.png" />
-    <BundleResource Include="Resources\fire_02%402x.png" />
-    <BundleResource Include="Resources\fire_02.png" />
-    <BundleResource Include="Resources\house%402x.png" />
-    <BundleResource Include="Resources\house.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ProjectExtensions>

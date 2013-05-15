@@ -37,21 +37,26 @@ public InfoViewModel Model { get; set; }
 
 public override void Execute()
 {
-WriteLiteral("<html>\n<body> \n\t<H1>");
+WriteLiteral("<html>\n<style");
+
+WriteLiteral(" type=\"text/css\"");
+
+WriteLiteral(">\n  body {\n    // background-color: #fff; \n    color:#333333; \n    font-family: \"" +
+"Helvetica Neue\", Helvetica; \n  }\n</style>\n<body> \n\t<!-- <H1>");
 
 
-#line 6 "/Users/peter/git/IcucApp-cx/Source/IcucApp.Touch/ViewControllers/InfoTemplate.cshtml"
-Write(Model.Title);
+#line 13 "/Users/peter/git/IcucApp-cx/Source/IcucApp.Touch/ViewControllers/InfoTemplate.cshtml"
+     Write(Model.Title);
 
 
 #line default
 #line hidden
-WriteLiteral("</H1>   \n");
+WriteLiteral("</H1>  -->\n");
 
 WriteLiteral("\t");
 
 
-#line 7 "/Users/peter/git/IcucApp-cx/Source/IcucApp.Touch/ViewControllers/InfoTemplate.cshtml"
+#line 14 "/Users/peter/git/IcucApp-cx/Source/IcucApp.Touch/ViewControllers/InfoTemplate.cshtml"
 Write(Html.Raw(Model.Content));
 
 

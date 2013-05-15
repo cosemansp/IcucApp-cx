@@ -28,6 +28,13 @@ namespace IcucApp.ViewControllers
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
+	
+			// navigationbar background
+			NavigationController.NavigationBar.SetBackgroundImage(UIImage.FromBundle("navbar"), UIBarMetrics.Default);
+			
+			// table background
+			var backgroundView = new UIImageView(UIImage.FromBundle("background"));
+			this.TableView.BackgroundView = backgroundView;
 
             // init presenter
             Presenter.OnViewShown();
@@ -55,6 +62,11 @@ namespace IcucApp.ViewControllers
 				BTProgressHUD.Dismiss();
 			}
         }
+
+		protected override void OnPullDownRefresh (object sender, System.EventArgs e)
+		{
+			EndRefreshing();
+		}
 
     }
 }

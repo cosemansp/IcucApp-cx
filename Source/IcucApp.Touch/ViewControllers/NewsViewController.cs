@@ -26,7 +26,7 @@ namespace IcucApp.ViewControllers
 			_segmentedControl = new UISegmentedControl(new object[] {"Facebook", "Website"});
 			_segmentedControl.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
 			_segmentedControl.ControlStyle = UISegmentedControlStyle.Bar;
-			// _segmentedControl.TintColor = UIColor.Gray;
+			_segmentedControl.TintColor = UIColor.Clear;
 			_segmentedControl.Frame = new System.Drawing.RectangleF(0, 0, 200, 30);
 			_segmentedControl.SelectedSegment = 0;
 			_segmentedControl.ValueChanged += (object sender, System.EventArgs e) => {
@@ -41,6 +41,13 @@ namespace IcucApp.ViewControllers
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
+
+			// navigationbar background
+			NavigationController.NavigationBar.SetBackgroundImage(UIImage.FromBundle("navbar"), UIBarMetrics.Default);
+
+			// table background
+			var backgroundView = new UIImageView(UIImage.FromBundle("background"));
+			this.TableView.BackgroundView = backgroundView;
 
             // init presenter
             Presenter.OnViewShown();
@@ -76,5 +83,10 @@ namespace IcucApp.ViewControllers
 				BTProgressHUD.Dismiss();
 			}
         }
+
+		protected override void OnPullDownRefresh (object sender, System.EventArgs e)
+		{
+			EndRefreshing();
+		}
     }
 }

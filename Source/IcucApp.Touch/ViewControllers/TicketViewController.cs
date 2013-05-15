@@ -7,17 +7,21 @@ using System.Drawing;
 using IcucApp.Core;
 using MonoTouch.Foundation;
 using BigTed;
+using MonoTouch.Dialog;
+using IcucApp.ViewControllers.Elements;
 
 namespace IcucApp.ViewControllers
 {
-    public class TicketViewController : MvpViewController<TicketPresenter>, ITicketView
+	public class TicketViewController : MvpDialogViewController<TicketPresenter>, ITicketView
     {
 		private UIWebView _webView;
 		private string _currentUrl;
 
-        public TicketViewController()
-        {
-        }
+		public TicketViewController()
+			: base(UITableViewStyle.Grouped)
+		{
+			EnableRefresh();
+		}
 
         public override void ViewDidLoad()
         {
@@ -29,8 +33,9 @@ namespace IcucApp.ViewControllers
 			// Add WebView
 			_webView = new UIWebView()
 			{
-				Frame = new RectangleF(0, 0, 320, View.Frame.Height - Display.TabBarHeight - Display.NavigationBarHeight),
-				BackgroundColor = UIColor.White
+				Frame = new RectangleF(0, 0, 300, View.Frame.Height - Display.TabBarHeight - Display.NavigationBarHeight),
+				// BackgroundColor = UIColor.White,
+				Alpha = 0.0f
 			};
 			_webView.ShouldStartLoad = (webView, request, navType) =>
 			{
@@ -54,9 +59,10 @@ namespace IcucApp.ViewControllers
 //					Presenter.OnOpenLinkInBrowser(new Uri(request.Url.ToString()));
 //					return false;
 				}
-				View.AddSubview(_webView);
 				return true;
 			};
+
+			View.AddSubview(_webView);
 
 			_webView.LoadStarted += (sender, e) => {
 				BTProgressHUD.Show("Ticketshop wordt geladen...");
@@ -64,19 +70,32 @@ namespace IcucApp.ViewControllers
 
 			_webView.LoadFinished += (sender, e) => {
 				BTProgressHUD.Dismiss();
+
+				var rootElement = new RootElement("Ticket");
+				var section = new Section();
+				section.Add(new WebViewElement(_webView));
+				rootElement.Add(section);
+				Root = rootElement;
 			};
 
             // init presenter
             Presenter.Initialize();
         }
 
-        public override void ViewWillAppear(bool animated)
-        {
-            base.ViewWillAppear(animated);
-
-            // init presenter
-            Presenter.OnViewShown();
-        }
+		public override void ViewWillAppear(bool animated)
+		{
+			base.ViewWillAppear(animated);
+			
+			// navigationbar background
+			NavigationController.NavigationBar.SetBackgroundImage(UIImage.FromBundle("navbar"), UIBarMetrics.Default);
+			
+			// table background
+			var backgroundView = new UIImageView(UIImage.FromBundle("background"));
+			this.TableView.BackgroundView = backgroundView;
+			
+			// init presenter
+			Presenter.OnViewShown();
+		}
 
         public void DataBind(TicketModel model)
         {
@@ -88,5 +107,10 @@ namespace IcucApp.ViewControllers
 				_currentUrl = model.Url;
 			}
         }
+
+		protected override void OnPullDownRefresh (object sender, System.EventArgs e)
+		{
+			EndRefreshing();
+		}
     }
 }
