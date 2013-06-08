@@ -22,6 +22,10 @@ namespace IcucApp.Core
             container.Register<IMapper<FacebookEntry, FeedData>, FacebookEntryMapper>();
 			container.Register<IMapper<WordpressEntry, FeedData>, WordpressEntryMapper>();
 
+			// services
+			container.Register<IDataLoader, DataLoader> ().AsSingleton ();
+            container.Register<ICache, Cache>();
+
             //container.Register<IAnalyticsTracker, AnalyticsTracker>().AsSingleton();
             //container.Register<IWebBrowser, WebBrowser>().AsSingleton();
 #if DROID

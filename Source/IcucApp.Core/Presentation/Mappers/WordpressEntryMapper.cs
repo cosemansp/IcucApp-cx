@@ -16,7 +16,8 @@ namespace IcucApp.Presentation.Mappers
  			    Title = System.Web.HttpUtility.HtmlDecode(source.title),
 				Excerpt = source.excerpt,
                 Content = source.content,
-				ImageUrl = (source.image != null && source.image != "False") ? new Uri(source.image) : null
+				ImageUrl = (source.image != null && source.image != "False") ? new Uri(source.image) : null,
+                Id = source.id
            };
            return data;
         }

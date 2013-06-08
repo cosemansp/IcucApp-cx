@@ -2,6 +2,7 @@ using System;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using IcucApp.Presentation.ViewModels;
+using IcucApp.Core.Touch.UIKit;
 using System.Drawing;
 using MonoTouch.Dialog.Utilities;
 

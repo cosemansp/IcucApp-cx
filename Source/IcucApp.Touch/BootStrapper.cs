@@ -55,6 +55,8 @@ namespace IcucApp
                 //container.Register<ISocialSharing, CustomSocicalSharing>().AsSingleton();
             });
 
+			Container.Resolve<IDataLoader>().Start();
+
             //
             // define routes
             //

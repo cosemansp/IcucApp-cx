@@ -1,0 +1,26 @@
+@using IcucApp.Presentation.ViewModels
+@model FacebookDetailModel
+@inherits IcucApp.Core.UI.Web.TemplateBase
+<html>
+<style type="text/css">
+  body {	
+    // background-color: #fff; 
+    color:#333333; 
+    font-family: "Helvetica Neue", Helvetica; 
+  }
+  h1 {
+	font-size: 20;
+	font-weight: bold;
+  }
+  h2 {
+	font-size: 15;
+	font-weight: bold;
+  }
+</style>
+<body> 
+	<H1>@Model.Data.Title</H1>
+	<p>
+		@Html.Raw(Model.Data.Content)
+	</p>
+</body>
+</html>

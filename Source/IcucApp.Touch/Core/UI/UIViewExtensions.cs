@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using MonoTouch.UIKit;
 
-namespace IcucApp
+namespace IcucApp.Core.Touch.UIKit
 {
 	public enum AnchorPoint
 	{

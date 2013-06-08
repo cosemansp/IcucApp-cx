@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using IcucApp.Core.Diagnostics;
 using IcucApp.Core.Net;
+using IcucApp.Core;
 using RestSharp;
 
 namespace IcucApp.Services.Facebook
@@ -42,6 +43,10 @@ namespace IcucApp.Services.Facebook
 
                 var response = client.Execute<FacebookMessage>(request);
 
+                // error handling
+                if (!response.ErrorMessage.IsNullOrEmpty())
+                    throw new InvalidOperationException(response.ErrorMessage);
+
                 // deserialize
                 return response.Data;
             }
@@ -63,6 +68,8 @@ namespace IcucApp.Services.Facebook
         public string link { get; set; }
         public List<FacebookEntry> entries { get; set; }
         // ReSharper restore InconsistentNaming
+
+		public Exception Exception { get; set; }
     }
 
     public class FacebookEntry

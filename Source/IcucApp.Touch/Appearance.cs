@@ -9,6 +9,8 @@ namespace IcucApp.Touch
 
 			UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.BlackTranslucent, true);
 
+            UINavigationBar.Appearance.TintColor = UIColor.DarkGray;
+
              // setup tint and font
 			 //UITabBar.Appearance.TintColor = UIColor.Green;
              //UINavigationBar.AppearanceWhenContainedIn(typeof(UINavigationController)).TintColor = UIColor.Green;

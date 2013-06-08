@@ -15,6 +15,7 @@ namespace IcucApp.Presentation.Mappers
 				Content = System.Web.HttpUtility.HtmlDecode(source.content),
                 Published = source.published,
 				Title = System.Web.HttpUtility.HtmlDecode(source.title),
+                Id = source.id,
                 Updated = source.updated
             };
             return data;

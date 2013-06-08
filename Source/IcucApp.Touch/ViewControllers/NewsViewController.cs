@@ -6,12 +6,14 @@ using IcucApp.ViewControllers.Elements;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 using BigTed;
+using IcucApp.Core.Touch.UIKit;
+using System.Drawing;
 
 namespace IcucApp.ViewControllers
 {
     public class NewsViewController : MvpDialogViewController<NewsPresenter>, INewsView
     {
-		UISegmentedControl _segmentedControl;
+        private UISegmentedControl _segmentedControl;
 
         public NewsViewController()
             : base(UITableViewStyle.Grouped)
@@ -23,16 +25,17 @@ namespace IcucApp.ViewControllers
         {
             base.ViewDidLoad();
 
-			_segmentedControl = new UISegmentedControl(new object[] {"Facebook", "Website"});
+			_segmentedControl = new UISegmentedControl(new object[] {"Facebook", "Algemeen"});
 			_segmentedControl.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
 			_segmentedControl.ControlStyle = UISegmentedControlStyle.Bar;
-			_segmentedControl.TintColor = UIColor.Clear;
+			_segmentedControl.TintColor = UIColor.DarkGray;
 			_segmentedControl.Frame = new System.Drawing.RectangleF(0, 0, 200, 30);
 			_segmentedControl.SelectedSegment = 0;
 			_segmentedControl.ValueChanged += (object sender, System.EventArgs e) => {
 				Presenter.OpenNewsFeed(_segmentedControl.SelectedSegment);
 			};
 			this.NavigationItem.TitleView = _segmentedControl;
+
 
             // init presenter
             Presenter.Initialize();
@@ -53,40 +56,60 @@ namespace IcucApp.ViewControllers
             Presenter.OnViewShown();
         }
 
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+        }
+
         public void DataBind(NewsViewModel model)
         {
-            var rootElement = new RootElement("ICUC");
+            EndRefreshing();
+
+            var rootElement = new RootElement("Nieuws");
             var section = new Section();
+
+            if (!model.ErrorMessage.IsNullOrEmpty())
+            {
+                var loadMore = new LoadingErrorElement("Fout tijdens het laden", 
+                                                       "Tap om opnieuw te proberen",
+                                                       "Laden...", Retry);
+                section.Add(loadMore);
+            }
             foreach (var entry in model.Entries)
             {
                 if (entry.Title.Trim(" ".ToCharArray()).IsNullOrEmpty())
                     continue;
 				if (entry.Type == "facebook") {
 	                var element = new FacebookEntryElement(entry);
-					element.Tapped += (sender, e) => Presenter.OnClickedFacebookFeed(entry.Id);
+                    element.Tapped += (sender, e) => {
+                        var thisElement = sender as FacebookEntryElement;
+                        Presenter.OnClickedFacebookFeed(thisElement.Data.Id);
+                    };
 	                section.Add(element);
 				}
 				else {
 					var element = new WebsiteEntryElement(entry);
-					element.Tapped += (sender, e) => Presenter.OnClickedWebsiteFeed(entry.Id);
+                    element.Tapped += (sender, e) => {
+                        var thisElement = sender as WebsiteEntryElement;
+                        Presenter.OnClickedWebsiteFeed(thisElement.Data.Id);
+                    };
 					section.Add(element);
 				}
             }
 
             rootElement.Add(section);
             Root = rootElement;
-
-			if (model.IsLoading) {
-				BTProgressHUD.Show("Het nieuws wordt geladen...");
-			}
-			else {
-				BTProgressHUD.Dismiss();
-			}
+            ShowSpinner(model.IsLoading);
         }
 
 		protected override void OnPullDownRefresh (object sender, System.EventArgs e)
 		{
-			EndRefreshing();
+            Presenter.Reload();
 		}
+
+        private void Retry(LoadMoreElement element) {
+            Presenter.Reload();
+        }
+
     }
 }

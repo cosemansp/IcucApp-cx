@@ -13,5 +13,7 @@ namespace IcucApp.Presentation.ViewModels
 		public string Content { get; set; }
 		public DateTime LastUpdate { get; set; }
 		public string FeatureImageUrl { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 }

@@ -2,7 +2,10 @@
 {
     public class FacebookDetailModel
     {
-        public string Title { get; set; }
-        public string Content { get; set; }
+        public FeedData Data { get; private set; }
+
+        public FacebookDetailModel(FeedData data) {
+            Data = data;
+        }
     }
 }

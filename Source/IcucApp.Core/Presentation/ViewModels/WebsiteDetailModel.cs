@@ -2,7 +2,10 @@
 {
     public class WebsiteDetailModel
     {
-        public string Title { get; set; }
-        public string Content { get; set; } 
+        public FeedData Data { get; private set; }
+
+        public WebsiteDetailModel(FeedData data) {
+            Data = data;
+        }
     }
 }

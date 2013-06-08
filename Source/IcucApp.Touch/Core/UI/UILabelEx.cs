@@ -2,7 +2,7 @@ using System;
 using MonoTouch.UIKit;
 using System.Drawing;
 
-namespace IcucApp
+namespace IcucApp.Core.Touch.UIKit
 {
 	public class UILabelEx: UILabel {
 		

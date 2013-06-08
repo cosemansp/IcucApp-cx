@@ -12,15 +12,14 @@ using IcucApp.ViewControllers.Elements;
 
 namespace IcucApp.ViewControllers
 {
-	public class TicketViewController : MvpDialogViewController<TicketPresenter>, ITicketView
+	public class TicketViewController : MvpViewController<TicketPresenter>, ITicketView
     {
 		private UIWebView _webView;
 		private string _currentUrl;
+        private UIActivityIndicatorView _activitySpinner;
 
 		public TicketViewController()
-			: base(UITableViewStyle.Grouped)
 		{
-			EnableRefresh();
 		}
 
         public override void ViewDidLoad()
@@ -33,9 +32,9 @@ namespace IcucApp.ViewControllers
 			// Add WebView
 			_webView = new UIWebView()
 			{
-				Frame = new RectangleF(0, 0, 300, View.Frame.Height - Display.TabBarHeight - Display.NavigationBarHeight),
-				// BackgroundColor = UIColor.White,
-				Alpha = 0.0f
+				Frame = new RectangleF(0, 0, 320, View.Frame.Height - Display.TabBarHeight - Display.NavigationBarHeight),
+				BackgroundColor = UIColor.White,
+				Alpha = 1.0f
 			};
 			_webView.ShouldStartLoad = (webView, request, navType) =>
 			{
@@ -65,17 +64,11 @@ namespace IcucApp.ViewControllers
 			View.AddSubview(_webView);
 
 			_webView.LoadStarted += (sender, e) => {
-				BTProgressHUD.Show("Ticketshop wordt geladen...");
+                ShowSpinner();
 			};
 
 			_webView.LoadFinished += (sender, e) => {
-				BTProgressHUD.Dismiss();
-
-				var rootElement = new RootElement("Ticket");
-				var section = new Section();
-				section.Add(new WebViewElement(_webView));
-				rootElement.Add(section);
-				Root = rootElement;
+                ShowSpinner(false);
 			};
 
             // init presenter
@@ -89,16 +82,13 @@ namespace IcucApp.ViewControllers
 			// navigationbar background
 			NavigationController.NavigationBar.SetBackgroundImage(UIImage.FromBundle("navbar"), UIBarMetrics.Default);
 			
-			// table background
-			var backgroundView = new UIImageView(UIImage.FromBundle("background"));
-			this.TableView.BackgroundView = backgroundView;
-			
 			// init presenter
 			Presenter.OnViewShown();
 		}
 
         public void DataBind(TicketModel model)
         {
+            ShowSpinner(false);
 			if (_currentUrl != model.Url) {
 				var url = new NSUrl(model.Url);
 				var request = new NSUrlRequest(url);
@@ -108,9 +98,32 @@ namespace IcucApp.ViewControllers
 			}
         }
 
-		protected override void OnPullDownRefresh (object sender, System.EventArgs e)
-		{
-			EndRefreshing();
-		}
+        protected void ShowSpinner(bool show = true)
+        {
+            if (!show) {
+                if (_activitySpinner != null) {
+                    _activitySpinner.Hidden = true;
+                    _activitySpinner.RemoveFromSuperview();
+                    _activitySpinner = null;
+                }
+                return;
+            }
+
+            if (_activitySpinner == null) {
+                // derive the center x and y
+                float centerX = View.Frame.Width / 2;
+                float centerY = View.Frame.Height / 2;
+
+                _activitySpinner = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.Gray);
+                _activitySpinner.Frame = new RectangleF(centerX - (_activitySpinner.Frame.Width / 2),
+                                                        centerY - _activitySpinner.Frame.Height - 20,
+                                                        _activitySpinner.Frame.Width,
+                                                        _activitySpinner.Frame.Height);
+                _activitySpinner.AutoresizingMask = UIViewAutoresizing.FlexibleMargins;
+                View.AddSubview(_activitySpinner);
+            }
+            _activitySpinner.Hidden = false;
+            _activitySpinner.StartAnimating();
+        }
     }
 }

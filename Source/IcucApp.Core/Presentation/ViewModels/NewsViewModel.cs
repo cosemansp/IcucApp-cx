@@ -29,5 +29,7 @@ namespace IcucApp.Presentation.ViewModels
         public List<FeedData> Entries { get; set; }
 
 		public bool IsLoading { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 }

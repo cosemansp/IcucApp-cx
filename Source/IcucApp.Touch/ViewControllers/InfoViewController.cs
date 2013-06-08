@@ -50,7 +50,7 @@ namespace IcucApp.ViewControllers
 			_webView.LoadStarted += (sender, e) => {
 			};
 			_webView.LoadFinished += (sender, e) => {
-				BTProgressHUD.Dismiss();
+                ShowSpinner(false);
 
 				var rootElement = new RootElement("Informatie");
 				var section = new Section();
@@ -82,9 +82,7 @@ namespace IcucApp.ViewControllers
 
         public void DataBind(InfoViewModel model)
         {
-			if (model.IsLoading) {
-				BTProgressHUD.Show("Informatie wordt geladen...");
-			}
+            ShowSpinner(model.IsLoading);
 
 			var template = new InfoTemplate () { Model = model };
 			var htmlContent = template.GenerateString();

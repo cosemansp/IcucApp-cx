@@ -15,38 +15,46 @@ namespace IcucApp.Presentation
     public class InfoPresenter : IPresenter
     {
         private readonly IInfoView _view;
-		private readonly IDispatcher _dispatcher;
-		private readonly IWordpressFeedAgent _websiteAgent;
 		private readonly IWebBrowser _webBrowser;
-
+		private readonly IDataLoader _dataLoader;
+		private readonly ICache _cache;
+        private bool _isActive;
         private readonly ILog _log = LogManager.GetLogger(typeof(InfoPresenter).Name);
 
         public InfoPresenter(IInfoView view,
-		                     IDispatcher dispatcher,
-		                     IWordpressFeedAgent websiteAgent,
+		                     ICache cache,
+		                     IDataLoader dataLoader,
 		                     IWebBrowser webBrowser) 
         {
-            _view = view;
-			_dispatcher = dispatcher;
-			_websiteAgent = websiteAgent;
+			_dataLoader = dataLoader;
+            _view = view; 
+			_cache = cache;
 			_webBrowser = webBrowser;
         }
 
         public void Initialize()
         {
+            _dataLoader.DataLoaded += (sender, e) => {
+                if (!_isActive) 
+                    return;
+                var feed = _cache.GetInfoFeed();
+                if (feed != null) {
+                    DataBindView(feed);
+                }
+            };
         }
 
         public void OnViewShown()
         {
-			var data = CacheStore.Get<WordpressEntry>("infoFeed");
-			if (data == null)
+            _isActive = true;
+			var feed = _cache.GetInfoFeed();
+			if (feed == null)
 			{
-				_dispatcher.ExecuteAsync(LoadData, FinishedLoading);
 				_view.DataBind(InfoViewModel.Loading);
 				return;
 			}
 
-			DataBindView(data);
+			DataBindView(feed);
         }
 
 		public void OnOpenLinkInBrowser (Uri uri)
@@ -54,27 +62,33 @@ namespace IcucApp.Presentation
 			_webBrowser.OpenUrl(uri.ToString());
 		}
 
-		private WordpressEntry LoadData()
-		{
-			return _websiteAgent.GetSingleFeed("2013/app-info");
-		}
+//		private WordpressEntry LoadData()
+//		{
+//			return _websiteAgent.GetSingleFeed("2013/app-info");
+//		}
+//
+//		private void FinishedLoading(WordpressEntry result, Exception exception)
+//		{
+//			if (exception != null) {
+//				_log.ErrorFormat("failed to load data: {0}", exception.Message);
+//				return;
+//			}
+//			
+//			CacheStore.Set("infoFeed", result);
+//			DataBindView(result);
+//		}
 
-		private void FinishedLoading(WordpressEntry result, Exception exception)
-		{
-			if (exception != null) {
-				_log.ErrorFormat("failed to load data: {0}", exception.Message);
-				return;
-			}
-			
-			CacheStore.Set("infoFeed", result);
-			DataBindView(result);
-		}
-
-        private void DataBindView(WordpressEntry entry)
+        private void DataBindView(RequestContext<WordpressEntry> context)
         {
             var model = new InfoViewModel();
-			model.Title = entry.title;
-			model.Content = entry.content;
+            if (context.Exception != null)
+            {
+                model.ErrorMessage = "Ophalen icue nieuws is mislukt";
+            }
+            if (context.Data != null) {
+                model.Title = context.Data.title;
+                model.Content = context.Data.content;
+            }
             _view.DataBind(model);
         }
 

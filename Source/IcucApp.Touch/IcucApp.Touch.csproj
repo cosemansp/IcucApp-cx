@@ -272,13 +272,6 @@
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewControllers\Elements\LineupEntryElement.cs" />
-    <None Include="ViewControllers\InfoTemplate.cshtml">
-      <Generator>RazorTemplatePreprocessor</Generator>
-      <LastGenOutput>InfoTemplate.cs</LastGenOutput>
-    </None>
-    <Compile Include="ViewControllers\InfoTemplate.cs">
-      <DependentUpon>InfoTemplate.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="ViewControllers\Elements\LineupEntryCell.cs" />
     <Compile Include="Core\UI\UIViewExtensions.cs" />
     <Compile Include="Core\UI\ImageResizer.cs" />
@@ -287,6 +280,31 @@
     <Compile Include="Core\UI\UILabelEx.cs" />
     <Compile Include="ViewControllers\Elements\FacebookEntryCell.cs" />
     <Compile Include="ViewControllers\Elements\WebViewElement.cs" />
+    <Compile Include="Services\DataLoader.cs" />
+    <Compile Include="Services\Cache.cs" />
+    <Compile Include="Core\UI\UILoadingOverlay.cs" />
+    <Compile Include="ViewControllers\Elements\LoadingErrorElement.cs" />
+    <None Include="ViewControllers\FacebookDetailTemplate.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>FacebookDetailTemplate.cs</LastGenOutput>
+    </None>
+    <Compile Include="ViewControllers\FacebookDetailTemplate.cs">
+      <DependentUpon>FacebookDetailTemplate.cshtml</DependentUpon>
+    </Compile>
+    <None Include="ViewControllers\InfoTemplate.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>InfoTemplate.cs</LastGenOutput>
+    </None>
+    <Compile Include="ViewControllers\InfoTemplate.cs">
+      <DependentUpon>InfoTemplate.cshtml</DependentUpon>
+    </Compile>
+    <None Include="ViewControllers\WebsiteDetailTemplate.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>WebsiteDetailTemplate.cs</LastGenOutput>
+    </None>
+    <Compile Include="ViewControllers\WebsiteDetailTemplate.cs">
+      <DependentUpon>WebsiteDetailTemplate.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default.png" />

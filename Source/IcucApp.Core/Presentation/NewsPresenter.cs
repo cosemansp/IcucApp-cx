@@ -17,9 +17,8 @@ namespace IcucApp.Presentation
     public class NewsPresenter : IPresenter
     {
         private readonly INewsView _view;
-        private readonly IDispatcher _dispatcher;
-        private readonly IFacebookFeedAgent _facebookAgent;
-		private readonly IWordpressFeedAgent _websiteAgent;
+		private readonly ICache _cache;
+		private readonly IDataLoader _dataLoader;
         private readonly INavigator _navigator;
         private readonly IMapper<FacebookEntry, FeedData> _facebookMapper;
 		private readonly IMapper<WordpressEntry, FeedData> _wordpressMapper;
@@ -28,21 +27,34 @@ namespace IcucApp.Presentation
 		int _segment;
 
         public NewsPresenter(INewsView view, 
-                             IDispatcher dispatcher, 
-                             IFacebookFeedAgent facebookAgent,
-		                     IWordpressFeedAgent websiteAgent,
+		                     ICache cache,
+		                     IDataLoader dataLoader,
                              INavigator navigator,
                              IMapper<FacebookEntry, FeedData> facebookMapper,
 		                     IMapper<WordpressEntry, FeedData> wordpressMapper)
         {
-			_websiteAgent = websiteAgent;
             _view = view;
-            _dispatcher = dispatcher;
-            _facebookAgent = facebookAgent;
-            _navigator = navigator;
+			_cache = cache;
+			_dataLoader = dataLoader;
+			_navigator = navigator;
 			_facebookMapper = facebookMapper;
 			_wordpressMapper = wordpressMapper;
 			_segment = 0;
+
+			_dataLoader.DataLoaded += (sender, e) => {
+				if (_segment == 0) {
+					var feed = _cache.GetFacebookFeed();
+					if (feed != null) {
+						DataBindView(feed);
+					}
+				}
+				else {
+					var feed = _cache.GetWebsiteFeed();
+					if (feed != null) {
+						DataBindView(feed);
+					}
+				}
+			};
         }
 
         public void Initialize()
@@ -59,29 +71,38 @@ namespace IcucApp.Presentation
 			}
         }
 
-        private void FinishedFacebookLoading(FacebookMessage result, Exception exception)
-        {
-			if (exception != null) {
-				_log.ErrorFormat("failed to load data: {0}", exception.Message);
-				_view.DataBind(NewsViewModel.Empty);
+		void LoadAndBindFacebookFeed ()
+		{
+			var feed = _cache.GetFacebookFeed();
+			if (feed == null)
+			{
+				_view.DataBind(NewsViewModel.Loading);
 				return;
 			}
+			DataBindView(feed);
+		}
 
-            CacheStore.Set("facebookFeeds", result);
-            DataBindView(result.entries);
-        }
+		void LoadAndBindWebsiteNews ()
+		{
+			var feed = _cache.GetWebsiteFeed();
+			if (feed == null)
+			{
+				_view.DataBind(NewsViewModel.Loading);
+				return;
+			}
+			DataBindView(feed);
+		}
 
-        private FacebookMessage LoadFacebookData()
-        {
-            return _facebookAgent.GetFeeds("441615792534282" /* icuc feedId */);
-        }
-
-        private void DataBindView(IEnumerable<FacebookEntry> entries)
+        private void DataBindView(RequestContext<FacebookMessage> context)
         {
             var model = new NewsViewModel();
-			if (entries != null) 
+            if (context.Exception != null)
+            {
+                model.ErrorMessage = "Ophalen facebook nieuws is mislukt";
+            }
+            else if (context.Data != null && context.Data.entries != null) 
 			{
-	            foreach (var feedEntry in entries)
+                foreach (var feedEntry in context.Data.entries)
 	            {
 					var dataEntry = _facebookMapper.Map(feedEntry);
 					dataEntry.ImageUrl = new Uri("http://graph.facebook.com/{0}/picture".FormatWith("441615792534282"));
@@ -90,6 +111,23 @@ namespace IcucApp.Presentation
 			}
             _view.DataBind(model);
         }
+
+        private void DataBindView(RequestContext<WordpressMessage> context)
+		{
+			var model = new NewsViewModel();
+            if (context.Exception != null)
+            {
+                model.ErrorMessage = "Ophalen icue nieuws is mislukt";
+            }
+            if (context.Data != null && context.Data.Entries != null) 
+			{
+                foreach (var websiteEntry in context.Data.Entries)
+				{
+					model.Entries.Add(_wordpressMapper.Map(websiteEntry));
+				}
+			}
+			_view.DataBind(model);
+		}
 
         public void OnViewUnloaded()
         {
@@ -118,63 +156,16 @@ namespace IcucApp.Presentation
             _navigator.PushPresenter<WebsiteDetailPresenter>(_view, feedId);
         }
 
-		public void Refresh ()
+		public void Reload ()
 		{
-			throw new System.NotImplementedException ();
+            if (_segment == 0)
+            {
+                _dataLoader.ReloadFacebookFeed();
+            }
+            else
+            {
+                _dataLoader.ReloadWebsiteFeed();
+            }
 		}
-
-		void LoadAndBindFacebookFeed ()
-		{
-			var data = CacheStore.Get<FacebookMessage>("facebookFeeds");
-			if (data == null)
-			{
-				_dispatcher.ExecuteAsync(LoadFacebookData, FinishedFacebookLoading);
-				_view.DataBind(NewsViewModel.Loading);
-				return;
-			}
-			DataBindView(data.entries);
-		}
-
-		void LoadAndBindWebsiteNews ()
-		{
-			var data = CacheStore.Get<WordpressMessage>("websiteFeeds");
-			if (data == null)
-			{
-				_dispatcher.ExecuteAsync(LoadWebsiteData, FinishedWebsiteLoading);
-				_view.DataBind(NewsViewModel.Loading);
-				return;
-			}
-			DataBindView(data.Entries);
-		}
-
-		WordpressMessage LoadWebsiteData() {
-			return _websiteAgent.GetFeeds("2013/category/app-news");
-		}
-
-		private void FinishedWebsiteLoading(WordpressMessage result, Exception exception)
-		{
-			if (exception != null) {
-				_log.ErrorFormat("failed to load data: {0}", exception.Message);
-				_view.DataBind(NewsViewModel.Empty);
-				return;
-			}
-			
-			CacheStore.Set("websiteFeeds", result);
-			DataBindView(result.Entries);
-		}
-
-		private void DataBindView(IEnumerable<WordpressEntry> entries)
-		{
-			var model = new NewsViewModel();
-			if (entries != null) 
-			{
-				foreach (var websiteEntry in entries)
-				{
-					model.Entries.Add(_wordpressMapper.Map(websiteEntry));
-				}
-			}
-			_view.DataBind(model);
-		}
-
     }
 }

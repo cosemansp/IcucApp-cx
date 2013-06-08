@@ -24,6 +24,7 @@ namespace IcucApp.Core.UI
     public class MvpDialogViewController<TPresenter> : DialogViewController where TPresenter : class, IPresenter
     {
         private readonly TPresenter _presenter;
+        private UIActivityIndicatorView _activitySpinner;
 
         public MvpDialogViewController(UITableViewStyle style, bool pushing = true)
             : base(style, null, pushing)
@@ -48,6 +49,33 @@ namespace IcucApp.Core.UI
 
         protected virtual void OnPullDownRefresh(object sender, EventArgs e)
         {
+        }
+
+        protected void ShowSpinner(bool show = true)
+        {
+            if (!show) {
+                if (_activitySpinner != null) {
+                    _activitySpinner.Hidden = true;
+                    _activitySpinner.RemoveFromSuperview();
+                    _activitySpinner = null;
+                }
+                return;
+            }
+
+            if (_activitySpinner == null) {
+                // derive the center x and y
+                float centerX = View.Frame.Width / 2;
+                float centerY = View.Frame.Height / 2;
+
+                _activitySpinner = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.Gray);
+                _activitySpinner.Frame = new RectangleF(centerX - (_activitySpinner.Frame.Width / 2),
+                                                        centerY - _activitySpinner.Frame.Height - 20,
+                                                        _activitySpinner.Frame.Width,
+                                                        _activitySpinner.Frame.Height);
+                _activitySpinner.AutoresizingMask = UIViewAutoresizing.FlexibleMargins;
+                View.AddSubview(_activitySpinner);
+            }
+            _activitySpinner.StartAnimating();
         }
 
         protected void EndRefreshing()

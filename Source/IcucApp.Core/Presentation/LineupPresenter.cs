@@ -16,60 +16,63 @@ namespace IcucApp.Presentation
     public class LineupPresenter : IPresenter
     {
         private readonly ILineupView _view;
-		private readonly IWordpressFeedAgent _websiteAgent;
-		private readonly IDispatcher _dispatcher;
+        private readonly ICache _cache;
+        private readonly IDataLoader _dataLoader;
 		private readonly IMapper<WordpressEntry, FeedData> _wordpressMapper;
+        private bool _isActive;
         private readonly ILog _log = LogManager.GetLogger(typeof(LineupPresenter).Name);
 
         public LineupPresenter(ILineupView view,
-		                       IDispatcher dispatcher,
-		                       IWordpressFeedAgent websiteAgent,
+		                       ICache cache,
+		                       IDataLoader dataLoader,
 		                       IMapper<WordpressEntry, FeedData> wordpressMapper) 
         {
             _view = view;
-			_dispatcher = dispatcher;
-			_websiteAgent = websiteAgent;
+			_cache = cache;
+			_dataLoader = dataLoader;
 			_wordpressMapper = wordpressMapper;
         }
 
         public void Initialize()
         {
+            _dataLoader.DataLoaded += (sender, e) => {
+                if (!_isActive)
+                    return;
+                var feed = _cache.GetLineupFeed();
+                if (feed != null) {
+                    DataBindView(feed);
+                }
+            };
         }
 
         public void OnViewShown()
         {
-			var data = CacheStore.Get<WordpressMessage>("lineupFeeds");
-			if (data == null)
+            _isActive = true;
+            var feed = _cache.GetLineupFeed();
+			if (feed == null)
 			{
-				_dispatcher.ExecuteAsync(LoadWebsiteData, FinishedWebsiteLoading);
+                // no data availble, is loading
 				_view.DataBind(LineupViewModel.Loading);
 				return;
 			}
-			DataBindView(data.Entries);
+			DataBindView(feed);
         }
 
-		WordpressMessage LoadWebsiteData() {
-			return _websiteAgent.GetFeeds("2013/category/app-lineup");
-		}
-		
-		private void FinishedWebsiteLoading(WordpressMessage result, Exception exception)
-		{
-			if (exception != null) {
-				_log.ErrorFormat("failed to load data: {0}", exception.Message);
-				return;
-			}
-			
-			CacheStore.Set("lineupFeeds", result);
-			DataBindView(result.Entries);
-		}
+        public void OpenNewsFeed(int segment) {
 
-		private void DataBindView(IEnumerable<WordpressEntry> entries)
+        }
+
+		private void DataBindView(RequestContext<WordpressMessage> context)
 		{
 			try {
 				var model = new LineupViewModel();
-				if (entries != null) 
+                if (context.Exception != null)
+                {
+                    model.ErrorMessage = "Ophalen icue nieuws is mislukt";
+                }
+                if (context.Data != null && context.Data.Entries != null) 
 				{
-					foreach (var websiteEntry in entries)
+                    foreach (var websiteEntry in context.Data.Entries)
 					{
 						model.Entries.Add(_wordpressMapper.Map(websiteEntry));
 					}
@@ -84,11 +87,12 @@ namespace IcucApp.Presentation
 
         public void OnViewUnloaded()
         {
+
         }
 
 		public void Refresh ()
 		{
-
+            _dataLoader.ReloadWebsiteLineup();
 		}
     }
 }
