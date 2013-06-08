@@ -7,6 +7,7 @@ using System.Drawing;
 using IcucApp.Core;
 using MonoTouch.Dialog;
 using IcucApp.ViewControllers.Elements;
+using System;
 
 namespace IcucApp.ViewControllers
 {
@@ -28,7 +29,7 @@ namespace IcucApp.ViewControllers
             // Add WebView
             _webView = new UIWebView()
             {
-                Frame = new RectangleF(0, 0, 300, View.Frame.Height - Display.TabBarHeight - Display.NavigationBarHeight),
+                Frame = new RectangleF(0, 0, 300, 50), // View.Frame.Height - Display.TabBarHeight - Display.NavigationBarHeight),
                 // BackgroundColor = UIColor.White
                 Alpha = 0.0f
             };
@@ -40,6 +41,36 @@ namespace IcucApp.ViewControllers
                 section.Add(new WebViewElement(_webView));
                 rootElement.Add(section);
                 Root = rootElement;
+            };
+            _webView.ShouldStartLoad = (webView, request, navType) =>
+            {
+                if (navType == UIWebViewNavigationType.LinkClicked)
+                {
+                    //                  if (request.Url.Query != null) {
+                    //                      if (request.Url.Query.Contains("comments"))
+                    //                      {
+                    //                          // comments/reactions clicked
+                    //                          Presenter.ShowComments(_articleId);
+                    //                          return false;
+                    //                      }
+                    //                      if (request.Url.Query.Contains("banner") && !_adTarget.IsNullOrEmpty())
+                    //                      {
+                    //                          // ad clicked
+                    //                          Presenter.OnAdClicked(_adTarget);
+                    //                          return false;
+                    //                      }
+                    //                  }
+                    if (request.Url.AbsoluteString.Contains("youtube"))
+                    {
+                        Presenter.OnOpenLinkInView(new Uri(request.Url.ToString()), "Youtube");
+                        return false;
+                    }
+
+                    // all other links
+                    //Presenter.OnOpenLinkInBrowser(new Uri(request.Url.ToString()));
+                    //return false;
+                }
+                return true;
             };
 
             View.AddSubview(_webView);

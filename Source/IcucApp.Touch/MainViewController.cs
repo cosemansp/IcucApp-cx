@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using IcucApp.ViewControllers;
 using MonoTouch.UIKit;
+using IcucApp.Presentation;
+using IcucApp.Configuration;
 
 namespace IcucApp
 {
     public class MainViewController : UITabBarController
     {
-
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
@@ -30,7 +31,11 @@ namespace IcucApp
             tabs.Add(infoTab);
 
             // Add info tab
-            var ticketTab = new UINavigationController(new TicketViewController());
+            var webViewContext = new WebViewContext { 
+                Title = "Ticket",
+                Url = "https://m.ticketscript.com/channel/web2/start-order/rid/3JB82HDY/language/nl"
+            };
+            var ticketTab = new UINavigationController(new WebViewController(webViewContext));
             ticketTab.TabBarItem = new UITabBarItem("Ticket", UIImage.FromBundle("ticket"), 4);
             tabs.Add(ticketTab);
 

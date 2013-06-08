@@ -205,9 +205,6 @@
     <Compile Include="..\IcucApp.Core\Presentation\ViewModels\NewsViewModel.cs">
       <Link>Presentation\ViewModels\NewsViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\TicketModel.cs">
-      <Link>Presentation\ViewModels\TicketModel.cs</Link>
-    </Compile>
     <Compile Include="..\IcucApp.Core\Presentation\ViewModels\WebsiteDetailModel.cs">
       <Link>Presentation\ViewModels\WebsiteDetailModel.cs</Link>
     </Compile>
@@ -304,6 +301,16 @@
     </None>
     <Compile Include="ViewControllers\WebsiteDetailTemplate.cs">
       <DependentUpon>WebsiteDetailTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewControllers\WebViewController.cs" />
+    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\TicketModel.cs">
+      <Link>Presentation\ViewModels\TicketModel.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\WebViewModel.cs">
+      <Link>Presentation\ViewModels\WebViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\IcucApp.Core\Presentation\WebViewPresenter.cs">
+      <Link>Presentation\WebViewPresenter.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

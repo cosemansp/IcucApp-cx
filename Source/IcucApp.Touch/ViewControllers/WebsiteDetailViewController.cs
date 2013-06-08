@@ -27,7 +27,7 @@ namespace IcucApp.ViewControllers
             // Add WebView
             _webView = new UIWebView()
             {
-                Frame = new RectangleF(0, 0, 300, View.Frame.Height - Display.TabBarHeight - Display.NavigationBarHeight),
+                Frame = new RectangleF(0, 0, 300, 100), //View.Frame.Height - Display.TabBarHeight - Display.NavigationBarHeight),
                 // BackgroundColor = UIColor.White
                 Alpha = 0.0f
             };

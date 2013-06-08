@@ -62,6 +62,7 @@ namespace IcucApp
             //
             RouteConfig.MapRoute<FacebookDetailPresenter>("FacebookDetail", context => new FacebookDetailViewController(context), true);
 			RouteConfig.MapRoute<WebsiteDetailPresenter>("WebsiteDetail", context => new WebsiteDetailViewController(context), true);
+            RouteConfig.MapRoute<WebViewPresenter>("WebView", context => new WebViewController(context), true);
         }
     }
 }

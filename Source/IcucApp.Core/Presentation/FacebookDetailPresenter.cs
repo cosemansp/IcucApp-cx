@@ -3,6 +3,7 @@ using IcucApp.Presentation.ViewModels;
 using IcucApp.Services.Syndication;
 using IcucApp.Services.Facebook;
 using IcucApp.Core;
+using System;
 
 namespace IcucApp.Presentation
 {
@@ -17,14 +18,20 @@ namespace IcucApp.Presentation
         private FacebookEntry _currentEntry;
         private IMapper<FacebookEntry, FeedData> _mapper;
         private ICache _cache;
+        private IWebBrowser _webBrowser;
+        private INavigator _navigator;
 
         public FacebookDetailPresenter(IFacebookDetailView view, 
                                        ICache cache,
+                                       IWebBrowser webBrowser,
+                                       INavigator navigator,
                                        IMapper<FacebookEntry, FeedData> facebookMapper) 
         {
+            _navigator = navigator;
             _view = view;
             _cache = cache;
             _mapper = facebookMapper;
+            _webBrowser = webBrowser;
         }
 
         public void Initialize(string context)
@@ -37,6 +44,21 @@ namespace IcucApp.Presentation
                     _currentEntry = item;
                 }
             }
+        }
+
+        public void OnOpenLinkInBrowser(Uri uri)
+        {
+            _webBrowser.OpenUrl(uri.ToString());
+        }
+
+        public void OnOpenLinkInView(Uri uri, string title)
+        {
+            var context = new WebViewContext
+            {
+                Title = title,
+                Url = uri.ToString()
+            };
+            _navigator.PushPresenter<WebViewPresenter>(_view, context);
         }
 
         public void OnViewShown()

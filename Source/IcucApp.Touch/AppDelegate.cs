@@ -15,7 +15,7 @@ namespace IcucApp
         private static readonly ILog Log = LogManager.GetLogger("AppDelegate");
 	    private UIWindow _mainWindows;
 	    private UserSettings _userSettings;
-	    private AppSettings _appSettings;
+	    // private AppSettings _appSettings;
 
 	    // This method is invoked when the application has loaded and is ready to run.
         // You have 17 seconds to return from this method, or iOS will terminate your application.
@@ -29,7 +29,7 @@ namespace IcucApp
 
             // Setup dependencies
 		    _userSettings = Container.Resolve<UserSettings>();
-            _appSettings = Container.Resolve<AppSettings>();
+            //_appSettings = Container.Resolve<AppSettings>();
 
             // setup main window and its controller
             _mainWindows = new UIWindow(UIScreen.MainScreen.Bounds);  // window based on its screen size

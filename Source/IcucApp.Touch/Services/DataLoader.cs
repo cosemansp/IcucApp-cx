@@ -36,6 +36,7 @@ namespace IcucApp
         void ReloadFacebookFeed();
         void ReloadWebsiteFeed();
         void ReloadWebsiteLineup();
+        void ReloadWebsiteLineupFucia();
         void ReloadWebsiteInfo();
 
         event EventHandler DataLoaded;
@@ -74,17 +75,23 @@ namespace IcucApp
             // store website and load info
             var task3 = task2.ContinueWith(t => {
                 HandleWebsiteResult(t);
-                return LoadWebsiteLineup();
+                return LoadWebsiteLineup("app-lineup");
             });
 
-            // store lineup and load info
+            // store lineup and load lineup fucia
 			var task4 = task3.ContinueWith(t => {
-                HandleLineupResult(t);
-				return LoadInfo();
+                HandleLineupResult(t, "lineup");
+                return LoadWebsiteLineup("app-lineup2");
 			});
 
+            // store lineup fucia and load info
+            var task5 = task4.ContinueWith(t => {
+                HandleLineupResult(t, "lineup2");
+                return LoadInfo();
+            });
+
             // store info
-			task4.ContinueWith(t => {
+			task5.ContinueWith(t => {
                 HandleInfoResult(t);
 				return LoadInfo();
 			});
@@ -161,18 +168,26 @@ namespace IcucApp
         // website lineup
 
         public void ReloadWebsiteLineup() {
+            ReloadWebsiteLineup("app-lineup", "lineup");
+        }
+
+        public void ReloadWebsiteLineupFucia() {
+            ReloadWebsiteLineup("app-lineup2", "lineup2");
+        }
+
+        public void ReloadWebsiteLineup(string feed, string category) {
             Task.Factory
                 .StartNew<WordpressMessage>(() => 
-                                            {
-                    return LoadWebsiteLineup();
+                {
+                    return LoadWebsiteLineup(feed);
                 })
                 .ContinueWith(t => 
                 {
-                    HandleLineupResult(t);
+                    HandleLineupResult(t, category);
                 });
         }
 
-        private void HandleLineupResult(Task<WordpressMessage> task) {
+        private void HandleLineupResult(Task<WordpressMessage> task, string category) {
             RequestContext<WordpressMessage> context; 
             if (task.IsFaulted) {
                 context = new RequestContext<WordpressMessage>(task.Exception.InnerExceptions[0]);
@@ -180,12 +195,12 @@ namespace IcucApp
             else {
                 context = new RequestContext<WordpressMessage>(task.Result);
             }
-            _cache.SetLineup(context);
+            _cache.SetLineup(category, context);
             SignalDataLoaded();
         }
 
-        public WordpressMessage LoadWebsiteLineup() {
-            return _wordpressFeedAgent.GetFeeds("2013/category/app-lineup");
+        public WordpressMessage LoadWebsiteLineup(string feed) {
+            return _wordpressFeedAgent.GetFeeds("2013/category/" + feed);
         }
 
         // website info
