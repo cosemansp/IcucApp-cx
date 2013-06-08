@@ -16,6 +16,7 @@ namespace IcucApp.ViewControllers
         private UIWebView _webView;
         private int _currentContentHashcode;
         private string _context;
+        private UIActivityIndicatorView _activitySpinner;
 
         public FacebookDetailViewController(string context) : base(UITableViewStyle.Grouped)
         {
@@ -29,8 +30,7 @@ namespace IcucApp.ViewControllers
             // Add WebView
             _webView = new UIWebView()
             {
-                Frame = new RectangleF(0, 0, 300, 50), // View.Frame.Height - Display.TabBarHeight - Display.NavigationBarHeight),
-                // BackgroundColor = UIColor.White
+                Frame = new RectangleF(0, 0, 300, 50), 
                 Alpha = 0.0f
             };
             _webView.LoadFinished += (sender, e) => {
@@ -42,33 +42,32 @@ namespace IcucApp.ViewControllers
                 rootElement.Add(section);
                 Root = rootElement;
             };
+            _webView.LoadStarted += (sender, e) => {
+                ShowSpinner();
+            };
+
+            _webView.LoadFinished += (sender, e) => {
+                ShowSpinner(false);
+            };
             _webView.ShouldStartLoad = (webView, request, navType) =>
             {
                 if (navType == UIWebViewNavigationType.LinkClicked)
                 {
-                    //                  if (request.Url.Query != null) {
-                    //                      if (request.Url.Query.Contains("comments"))
-                    //                      {
-                    //                          // comments/reactions clicked
-                    //                          Presenter.ShowComments(_articleId);
-                    //                          return false;
-                    //                      }
-                    //                      if (request.Url.Query.Contains("banner") && !_adTarget.IsNullOrEmpty())
-                    //                      {
-                    //                          // ad clicked
-                    //                          Presenter.OnAdClicked(_adTarget);
-                    //                          return false;
-                    //                      }
-                    //                  }
                     if (request.Url.AbsoluteString.Contains("youtube"))
                     {
                         Presenter.OnOpenLinkInView(new Uri(request.Url.ToString()), "Youtube");
                         return false;
                     }
 
+                    if (request.Url.AbsoluteString.Contains("twitter"))
+                    {
+                        Presenter.OnOpenLinkInView(new Uri(request.Url.ToString()), "Twitter");
+                        return false;
+                    }
+
                     // all other links
-                    //Presenter.OnOpenLinkInBrowser(new Uri(request.Url.ToString()));
-                    //return false;
+                    Presenter.OnOpenLinkInBrowser(new Uri(request.Url.ToString()));
+                    return false;
                 }
                 return true;
             };
@@ -102,6 +101,34 @@ namespace IcucApp.ViewControllers
                 _webView.LoadHtmlString (htmlContent, null);
                 _currentContentHashcode = htmlContent.GetHashCode();
             }
+        }
+
+        protected void ShowSpinner(bool show = true)
+        {
+            if (!show) {
+                if (_activitySpinner != null) {
+                    _activitySpinner.Hidden = true;
+                    _activitySpinner.RemoveFromSuperview();
+                    _activitySpinner = null;
+                }
+                return;
+            }
+
+            if (_activitySpinner == null) {
+                // derive the center x and y
+                float centerX = View.Frame.Width / 2;
+                float centerY = View.Frame.Height / 2;
+
+                _activitySpinner = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.Gray);
+                _activitySpinner.Frame = new RectangleF(centerX - (_activitySpinner.Frame.Width / 2),
+                                                        centerY - _activitySpinner.Frame.Height - 20,
+                                                        _activitySpinner.Frame.Width,
+                                                        _activitySpinner.Frame.Height);
+                _activitySpinner.AutoresizingMask = UIViewAutoresizing.FlexibleMargins;
+                View.AddSubview(_activitySpinner);
+            }
+            _activitySpinner.Hidden = false;
+            _activitySpinner.StartAnimating();
         }
     }
 }
