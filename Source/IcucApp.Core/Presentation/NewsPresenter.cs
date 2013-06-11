@@ -44,13 +44,13 @@ namespace IcucApp.Presentation
 			_dataLoader.DataLoaded += (sender, e) => {
 				if (_segment == 0) {
 					var feed = _cache.GetFacebookFeed();
-					if (feed != null) {
+					if (feed != null && e.Context == "facebook") {
 						DataBindView(feed);
 					}
 				}
 				else {
 					var feed = _cache.GetWebsiteFeed();
-					if (feed != null) {
+					if (feed != null && e.Context == "website") {
 						DataBindView(feed);
 					}
 				}
@@ -154,6 +154,12 @@ namespace IcucApp.Presentation
         public void OnClickedWebsiteFeed(string feedId)
         {
             _navigator.PushPresenter<WebsiteDetailPresenter>(_view, feedId);
+        }
+
+        public void ReloadAll ()
+        {
+            _dataLoader.ReloadAllFeed();
+            _view.DataBind(NewsViewModel.Loading);
         }
 
 		public void Reload ()

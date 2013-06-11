@@ -32,7 +32,7 @@ namespace IcucApp.ViewControllers
 			// Add WebView
 			_webView = new UIWebView()
 			{
-				Frame = new RectangleF(0, 0, 300, View.Frame.Height - Display.TabBarHeight - Display.NavigationBarHeight),
+				Frame = new RectangleF(0, 0, 300, 50), //View.Frame.Height - Display.TabBarHeight - Display.NavigationBarHeight),
 				// BackgroundColor = UIColor.White
 				Alpha = 0.0f
 			};
@@ -84,12 +84,28 @@ namespace IcucApp.ViewControllers
         {
             ShowSpinner(model.IsLoading);
 
-			var template = new InfoTemplate () { Model = model };
-			var htmlContent = template.GenerateString();
-			if (_currentContentHashcode != htmlContent.GetHashCode()) {
-				_webView.LoadHtmlString (htmlContent, null);
-				_currentContentHashcode = htmlContent.GetHashCode();
-			}
+            if (!model.ErrorMessage.IsNullOrEmpty())
+            {
+                var rootElement = new RootElement("Informatie");
+                var section = new Section();
+                var loadMore = new LoadingErrorElement();
+                loadMore.Tapped += (object sender, System.EventArgs e) => {
+                    Presenter.ReloadAll();
+                };
+                section.Add(loadMore);
+                rootElement.Add(section);
+                Root = rootElement;
+                return;
+            }
+
+            if (!model.IsLoading) {
+    			var template = new InfoTemplate () { Model = model };
+    			var htmlContent = template.GenerateString();
+    			if (_currentContentHashcode != htmlContent.GetHashCode()) {
+    				_webView.LoadHtmlString (htmlContent, null);
+    				_currentContentHashcode = htmlContent.GetHashCode();
+                }
+            }
         }
 
 		protected override void OnPullDownRefresh (object sender, System.EventArgs e)

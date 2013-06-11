@@ -70,9 +70,10 @@ namespace IcucApp.ViewControllers
 
             if (!model.ErrorMessage.IsNullOrEmpty())
             {
-                var loadMore = new LoadingErrorElement("Fout tijdens het laden", 
-                                                       "Tap om opnieuw te proberen",
-                                                       "Laden...", Retry);
+                var loadMore = new LoadingErrorElement();
+                loadMore.Tapped += (object sender, System.EventArgs e) => {
+                    Presenter.ReloadAll();
+                };
                 section.Add(loadMore);
             }
             foreach (var entry in model.Entries)

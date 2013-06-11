@@ -38,7 +38,7 @@ namespace IcucApp.Presentation
                 if (!_isActive) 
                     return;
                 var feed = _cache.GetInfoFeed();
-                if (feed != null) {
+                if (feed != null && e.Context == "info") {
                     DataBindView(feed);
                 }
             };
@@ -60,23 +60,7 @@ namespace IcucApp.Presentation
 		public void OnOpenLinkInBrowser (Uri uri)
 		{
 			_webBrowser.OpenUrl(uri.ToString());
-		}
-
-//		private WordpressEntry LoadData()
-//		{
-//			return _websiteAgent.GetSingleFeed("2013/app-info");
-//		}
-//
-//		private void FinishedLoading(WordpressEntry result, Exception exception)
-//		{
-//			if (exception != null) {
-//				_log.ErrorFormat("failed to load data: {0}", exception.Message);
-//				return;
-//			}
-//			
-//			CacheStore.Set("infoFeed", result);
-//			DataBindView(result);
-//		}
+        }
 
         private void DataBindView(RequestContext<WordpressEntry> context)
         {
@@ -94,6 +78,12 @@ namespace IcucApp.Presentation
 
         public void OnViewUnloaded()
         {
+        }
+
+        public void ReloadAll()
+        {
+            _dataLoader.ReloadAllFeed();
+            _view.DataBind(InfoViewModel.Loading);
         }
     }
 }

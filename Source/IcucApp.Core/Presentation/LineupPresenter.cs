@@ -92,6 +92,12 @@ namespace IcucApp.Presentation
 
         }
 
+        public void ReloadAll()
+        {
+            _dataLoader.ReloadAllFeed();
+            _view.DataBind(LineupViewModel.Loading);
+        }
+
 		public void Refresh ()
 		{
             _dataLoader.ReloadWebsiteLineup();

@@ -32,15 +32,22 @@ namespace IcucApp
 
 	public interface IDataLoader
 	{
-		void Start();
+		void Start(int initialDelay = 0);
         void ReloadFacebookFeed();
         void ReloadWebsiteFeed();
         void ReloadWebsiteLineup();
         void ReloadWebsiteLineupFucia();
         void ReloadWebsiteInfo();
 
-        event EventHandler DataLoaded;
+        void ReloadAllFeed();
+
+        event EventHandler<DataLoadedEventArgs> DataLoaded;
 	}
+
+    public class DataLoadedEventArgs : EventArgs 
+    {
+        public string Context { get;set; }
+    }
 
 	public class DataLoader : IDataLoader
 	{
@@ -49,7 +56,7 @@ namespace IcucApp
         IDispatcher _dispatcher;
         ICache _cache;
 
-        public event EventHandler DataLoaded;
+        public event EventHandler<DataLoadedEventArgs> DataLoaded;
 
 		public DataLoader (IFacebookFeedAgent facebookFeedAgent, 
                            IWordpressFeedAgent wordpressFeedAgent,
@@ -62,9 +69,16 @@ namespace IcucApp
             _facebookFeedAgent = facebookFeedAgent;
 		}
 
-		public void Start() {
+		public void Start(int initialDelay = 0) {
+
+            var task0 = Task.Factory.StartNew (() => System.Threading.Thread.Sleep(initialDelay));
+
             // load facebook news
-			var task1 = Task.Factory.StartNew (() => LoadFacebookNews());
+			//var task1 = Task.Factory.StartNew (() => LoadFacebookNews());
+
+            var task1 = task0.ContinueWith(t => {
+                return LoadFacebookNews();
+            });
 			
             // store facebook and load website news
             var task2 = task1.ContinueWith(t => {
@@ -97,16 +111,21 @@ namespace IcucApp
 			});
 		}
 
-        private void SignalDataLoaded() {
+        private void SignalDataLoaded(string context) {
             _dispatcher.DispatchOnMainThread( () => {
                 if (DataLoaded != null) {
-                    DataLoaded(this, EventArgs.Empty);
+                    DataLoaded(this, new DataLoadedEventArgs { Context = context });
                 }
             });
         }
 
-        // facebook 
+        public void ReloadAllFeed() {
+            // we start again with an initial delay so simulate some data transfer
+            // otherwise the gui is to fast to show any progress.
+            Start(1000);
+        }
 
+        // facebook 
         public void ReloadFacebookFeed() {
             Task.Factory
                 .StartNew<FacebookMessage>(() => 
@@ -128,7 +147,7 @@ namespace IcucApp
                 context = new RequestContext<FacebookMessage>(task.Result);
             }
             _cache.SetFacebook(context);
-            SignalDataLoaded();
+            SignalDataLoaded("facebook");
         }
 
 		public FacebookMessage LoadFacebookNews() {
@@ -158,7 +177,7 @@ namespace IcucApp
                 context = new RequestContext<WordpressMessage>(task.Result);
             }
             _cache.SetWebsite(context);
-            SignalDataLoaded();
+            SignalDataLoaded("website");
         }
 
 		public WordpressMessage LoadWebsiteNews() {
@@ -196,7 +215,7 @@ namespace IcucApp
                 context = new RequestContext<WordpressMessage>(task.Result);
             }
             _cache.SetLineup(category, context);
-            SignalDataLoaded();
+            SignalDataLoaded("lineup");
         }
 
         public WordpressMessage LoadWebsiteLineup(string feed) {
@@ -226,7 +245,7 @@ namespace IcucApp
                 context = new RequestContext<WordpressEntry>(task.Result);
             }
             _cache.SetInfo(context);
-            SignalDataLoaded();
+            SignalDataLoaded("info");
         }
 
 		public WordpressEntry LoadInfo() {

@@ -312,6 +312,7 @@
     <Compile Include="..\IcucApp.Core\Presentation\WebViewPresenter.cs">
       <Link>Presentation\WebViewPresenter.cs</Link>
     </Compile>
+    <Compile Include="ViewControllers\Elements\LoadingErrorCell.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default.png" />
