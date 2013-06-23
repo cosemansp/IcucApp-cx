@@ -35,8 +35,7 @@ namespace IcucApp
 		void Start(int initialDelay = 0);
         void ReloadFacebookFeed();
         void ReloadWebsiteFeed();
-        void ReloadWebsiteLineup();
-        void ReloadWebsiteLineupFucia();
+        void ReloadWebsiteLineup(string category);
         void ReloadWebsiteInfo();
 
         void ReloadAllFeed();
@@ -186,13 +185,17 @@ namespace IcucApp
 
         // website lineup
 
-        public void ReloadWebsiteLineup() {
-            ReloadWebsiteLineup("app-lineup", "lineup");
+        public void ReloadWebsiteLineup(string category) {
+            ReloadWebsiteLineup("app-" + category, category);
         }
 
-        public void ReloadWebsiteLineupFucia() {
-            ReloadWebsiteLineup("app-lineup2", "lineup2");
-        }
+//        public void ReloadWebsiteLineup() {
+//            ReloadWebsiteLineup("app-lineup", "lineup");
+//        }
+//
+//        public void ReloadWebsiteLineupFucia() {
+//            ReloadWebsiteLineup("app-lineup2", "lineup2");
+//        }
 
         public void ReloadWebsiteLineup(string feed, string category) {
             Task.Factory
@@ -258,6 +261,9 @@ namespace IcucApp
 		public Exception Exception { get; set; }
 		public DateTime TimeStamp { get; set; }
 		public T Data { get; set; }
+
+        public RequestContext() {
+        }
 
 		public RequestContext(T data) {
 			Data = data;

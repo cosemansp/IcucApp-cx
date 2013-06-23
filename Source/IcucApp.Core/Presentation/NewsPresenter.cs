@@ -6,6 +6,7 @@ using IcucApp.Core.UI;
 using IcucApp.Presentation.ViewModels;
 using IcucApp.Services.Facebook;
 using IcucApp.Services.Syndication;
+using IcucApp.Configuration;
 
 namespace IcucApp.Presentation
 {
@@ -22,6 +23,7 @@ namespace IcucApp.Presentation
         private readonly INavigator _navigator;
         private readonly IMapper<FacebookEntry, FeedData> _facebookMapper;
 		private readonly IMapper<WordpressEntry, FeedData> _wordpressMapper;
+        private readonly AppSettings _appSettings;
 
         private readonly ILog _log = LogManager.GetLogger(typeof(NewsPresenter).Name);
 		int _segment;
@@ -31,7 +33,8 @@ namespace IcucApp.Presentation
 		                     IDataLoader dataLoader,
                              INavigator navigator,
                              IMapper<FacebookEntry, FeedData> facebookMapper,
-		                     IMapper<WordpressEntry, FeedData> wordpressMapper)
+		                     IMapper<WordpressEntry, FeedData> wordpressMapper,
+                             AppSettings appSettings)
         {
             _view = view;
 			_cache = cache;
@@ -40,6 +43,7 @@ namespace IcucApp.Presentation
 			_facebookMapper = facebookMapper;
 			_wordpressMapper = wordpressMapper;
 			_segment = 0;
+            _appSettings = appSettings;
 
 			_dataLoader.DataLoaded += (sender, e) => {
 				if (_segment == 0) {
@@ -79,6 +83,10 @@ namespace IcucApp.Presentation
 				_view.DataBind(NewsViewModel.Loading);
 				return;
 			}
+            if (feed.TimeStamp < DateTime.Now - _appSettings.TimeoutContent)
+            {
+                _dataLoader.ReloadFacebookFeed();
+            }
 			DataBindView(feed);
 		}
 
@@ -90,6 +98,10 @@ namespace IcucApp.Presentation
 				_view.DataBind(NewsViewModel.Loading);
 				return;
 			}
+            if (feed.TimeStamp < DateTime.Now - _appSettings.TimeoutContent)
+            {
+                _dataLoader.ReloadWebsiteFeed();
+            }
 			DataBindView(feed);
 		}
 
@@ -108,6 +120,7 @@ namespace IcucApp.Presentation
 					dataEntry.ImageUrl = new Uri("http://graph.facebook.com/{0}/picture".FormatWith("441615792534282"));
 					model.Entries.Add(dataEntry);
 	            }
+                model.LastUpdate = context.TimeStamp;
 			}
             _view.DataBind(model);
         }
@@ -125,6 +138,7 @@ namespace IcucApp.Presentation
 				{
 					model.Entries.Add(_wordpressMapper.Map(websiteEntry));
 				}
+                model.LastUpdate = context.TimeStamp;
 			}
 			_view.DataBind(model);
 		}

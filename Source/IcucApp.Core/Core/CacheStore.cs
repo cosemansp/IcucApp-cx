@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
+using System.IO;
 
 namespace IcucApp.Core
 {
@@ -102,8 +104,17 @@ namespace IcucApp.Core
             Type type = typeof(T);
             lock (Sync)
             {
-                if (Cache.ContainsKey(key) == false)
-					return default(T);
+                if (Cache.ContainsKey(key) == false) {
+                    lock (Sync) {
+    				    // try read from storage
+                        var data = ReadFromStorage<T>(key);
+                        if (data != null) {
+                            Cache.Add(key, data);
+                            return data;
+                        }
+                        return default(T);
+                    }
+                }
 
                 lock (Sync)
                 {
@@ -129,6 +140,7 @@ namespace IcucApp.Core
                 lock (Sync)
                 {
                     Cache.Add(key, value);
+                    SaveToStorage(type.Name, value);
                 }
             }
             return value;
@@ -151,6 +163,7 @@ namespace IcucApp.Core
                 lock (Sync)
                 {
                     Cache.Add(type.Name, value);
+                    SaveToStorage(type.Name, value);
                 }
             }
             return value;
@@ -167,11 +180,12 @@ namespace IcucApp.Core
                 lock (Sync)
                 {
                     Cache.Add(key, value);
+                    SaveToStorage(key, value);
                 }
             }
         }
 
-		public static void Set<T>(string key, T value)
+		public static void Set<T>(string key, T value, bool persist)
 		{
 			lock (Sync)
 			{
@@ -179,6 +193,9 @@ namespace IcucApp.Core
 					Cache.Remove(key);
 
 				Cache.Add(key, value);
+
+                if (persist)
+                    SaveToStorage(key, value);
 			}
 		}
 
@@ -220,5 +237,39 @@ namespace IcucApp.Core
                 }
             }
         }
+
+        private static T ReadFromStorage<T>(string name) {
+            var fileName = name + ".txt";
+
+            // save to isolated storage
+            IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication();
+
+            if (!isolatedStorage.FileExists(fileName))
+                return default(T);
+
+            using (StreamReader readFile = new StreamReader(new IsolatedStorageFileStream(fileName, FileMode.Open, FileAccess.Read, isolatedStorage)))
+            {
+                var jsonString = readFile.ReadToEnd();
+                readFile.Close();
+                return jsonString.FromJson<T>();
+            }
+        }
+
+        private static void SaveToStorage(string name, object obj) {
+
+            var fileName = name + ".txt";
+
+            // concert to json
+            var jsonString = obj.ToJson();
+
+            // save to isolated storage
+            IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication();
+            using (StreamWriter writeFile = new StreamWriter(new IsolatedStorageFileStream(fileName, FileMode.Create, FileAccess.Write, isolatedStorage)))
+            {
+                writeFile.WriteLine(jsonString);
+                writeFile.Close();
+            }
+        }
+
     }
 }

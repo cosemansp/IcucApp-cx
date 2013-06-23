@@ -5,6 +5,7 @@ using MonoTouch.Foundation;
 using IcucApp.Presentation.ViewModels;
 using System.Drawing;
 using IcucApp.Core.Touch.UIKit;
+using System.Text.RegularExpressions;
 
 namespace IcucApp
 {
@@ -56,8 +57,15 @@ namespace IcucApp
 		
 		public void Update (FeedData data)
 		{
-			_data = data;
-			_titleLabel.Text = data.Title;
+            _data = data;
+            _titleLabel.Text = data.Title;
+
+            var match = Regex.Match(data.Content, "src=(?:\"|\')?(?<imgSrc>[^>]*[^/].(?:jpg|png))(?:\"|\')?");
+            var img = match.Groups["imgSrc"].Value;
+            if (!string.IsNullOrEmpty(img)) {
+                data.ImageUrl = new Uri(img);
+            }
+
 			if (data.ImageUrl != null) {
 				var image = ImageLoader.DefaultRequestImage(data.ImageUrl, this);
 				if (image != null) {

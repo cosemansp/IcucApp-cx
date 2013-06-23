@@ -4,6 +4,7 @@ using IcucApp.Presentation.ViewModels;
 using IcucApp.Services.Syndication;
 using IcucApp.Core;
 using System;
+using IcucApp.Configuration;
 
 namespace IcucApp.Presentation
 {
@@ -18,17 +19,21 @@ namespace IcucApp.Presentation
 		private readonly IWebBrowser _webBrowser;
 		private readonly IDataLoader _dataLoader;
 		private readonly ICache _cache;
+        private readonly AppSettings _appSettings;
         private bool _isActive;
+
         private readonly ILog _log = LogManager.GetLogger(typeof(InfoPresenter).Name);
 
         public InfoPresenter(IInfoView view,
 		                     ICache cache,
 		                     IDataLoader dataLoader,
+                             AppSettings appSettings,
 		                     IWebBrowser webBrowser) 
         {
 			_dataLoader = dataLoader;
             _view = view; 
 			_cache = cache;
+            _appSettings = appSettings;
 			_webBrowser = webBrowser;
         }
 
@@ -54,6 +59,11 @@ namespace IcucApp.Presentation
 				return;
 			}
 
+            if (feed.TimeStamp < DateTime.Now - _appSettings.TimeoutContent)
+            {
+                _dataLoader.ReloadWebsiteInfo();
+            }
+
 			DataBindView(feed);
         }
 
@@ -78,6 +88,12 @@ namespace IcucApp.Presentation
 
         public void OnViewUnloaded()
         {
+        }
+
+        public void Reload()
+        {
+            _dataLoader.ReloadWebsiteInfo();
+            //_view.DataBind(InfoViewModel.Loading);
         }
 
         public void ReloadAll()

@@ -6,6 +6,7 @@ using System.Drawing;
 using IcucApp.Core;
 using MonoTouch.Dialog;
 using IcucApp.ViewControllers.Elements;
+using System;
 
 namespace IcucApp.ViewControllers
 {
@@ -39,6 +40,28 @@ namespace IcucApp.ViewControllers
                 section.Add(new WebViewElement(_webView));
                 rootElement.Add(section);
                 Root = rootElement;
+            };
+            _webView.ShouldStartLoad = (webView, request, navType) =>
+            {
+                if (navType == UIWebViewNavigationType.LinkClicked)
+                {
+                    if (request.Url.AbsoluteString.Contains("youtube"))
+                    {
+                        Presenter.OnOpenLinkInView(new Uri(request.Url.ToString()), "Youtube");
+                        return false;
+                    }
+
+                    if (request.Url.AbsoluteString.Contains("twitter"))
+                    {
+                        Presenter.OnOpenLinkInView(new Uri(request.Url.ToString()), "Twitter");
+                        return false;
+                    }
+
+                    // all other links
+                    Presenter.OnOpenLinkInBrowser(new Uri(request.Url.ToString()));
+                    return false;
+                }
+                return true;
             };
 
             View.AddSubview(_webView);

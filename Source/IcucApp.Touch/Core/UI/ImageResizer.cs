@@ -176,11 +176,11 @@ namespace IcucApp
 			if (ModifiedImage == null) 
 				return;
 			
-			//if (Display.IsHighRes)
-			//{
-			//    width = width * 2;
-			//    height = height * 2;
-			//}
+			if (Display.IsHighRes)
+			{
+			    width = width * 2;
+			    height = height * 2;
+			}
 			
 			SizeF imgSize = ModifiedImage.Size;
 			//

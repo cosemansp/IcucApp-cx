@@ -95,6 +95,9 @@ namespace IcucApp.Services.Syndication
 
 	public class WordpressMessage 
 	{
+        public WordpressMessage() {
+        }
+
 		public WordpressMessage(List<WordpressEntry> entries){
 			Entries = entries;
 		}

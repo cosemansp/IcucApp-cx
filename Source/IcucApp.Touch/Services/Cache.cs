@@ -20,19 +20,58 @@ namespace IcucApp
     public class Cache : ICache
     {
         public void SetFacebook(RequestContext<FacebookMessage> context) {
-            CacheStore.Set("facebookFeeds", context);
+            var cacheKey = "facebookFeeds";
+            if (context.Exception == null)
+            {
+                // all ok, set to cache and persist
+                CacheStore.Set(cacheKey, context, true);
+            }
+            else if (GetFacebookFeed() == null)
+            {
+                // only store in cache when no data was available
+                CacheStore.Set(cacheKey, context, false);
+            }
         }
 
         public void SetWebsite(RequestContext<WordpressMessage> context) {
-            CacheStore.Set("websiteFeeds", context);
+            var cacheKey = "websiteFeeds";
+            if (context.Exception == null)
+            {
+                // all ok, set to cache and persist
+                CacheStore.Set(cacheKey, context, true);
+            }
+            else if (GetWebsiteFeed() == null)
+            {
+                // only store in cache when no data was available
+                CacheStore.Set(cacheKey, context, false);
+            }
         }
 
         public void SetLineup(string category, RequestContext<WordpressMessage> context) {
-            CacheStore.Set("lineupFeeds-" + category, context);
+            var cacheKey = "lineupFeeds-" + category;
+            if (context.Exception == null)
+            {
+                CacheStore.Set(cacheKey, context, true);
+            }
+            else if (GetLineupFeed(category) == null)
+            {
+                // only store in cache when no data was available
+                CacheStore.Set(cacheKey, context, false);
+            }
         }
 
         public void SetInfo(RequestContext<WordpressEntry> context) {
-            CacheStore.Set("infoFeed", context);
+            var cacheKey = "infoFeed";
+            if (context.Exception == null)
+            {
+                // all ok, set to cache and persist
+                CacheStore.Set(cacheKey, context, true);
+            }
+            else if (GetInfoFeed() == null)
+            {
+                // only store in cache when no data was available
+                CacheStore.Set(cacheKey, context, false);
+            }
         }
 
         public RequestContext<FacebookMessage> GetFacebookFeed() {

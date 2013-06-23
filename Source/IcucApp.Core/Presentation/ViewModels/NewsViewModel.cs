@@ -31,5 +31,7 @@ namespace IcucApp.Presentation.ViewModels
 		public bool IsLoading { get; set; }
 
         public string ErrorMessage { get; set; }
+
+        public DateTime LastUpdate { get; set; }
     }
 }

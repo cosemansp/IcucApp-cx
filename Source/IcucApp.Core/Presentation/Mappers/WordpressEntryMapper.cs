@@ -12,7 +12,7 @@ namespace IcucApp.Presentation.Mappers
            var data = new FeedData
            {
                 Type = "wordpress",
-                Published = source.date,
+                Published = source.date.ToUniversalTime(),
  			    Title = System.Web.HttpUtility.HtmlDecode(source.title),
 				Excerpt = source.excerpt,
                 Content = source.content,

@@ -10,6 +10,7 @@ using IcucApp.Touch;
 using IcucApp.Touch.Core;
 using IcucApp.ViewControllers;
 using MonoTouch.UIKit;
+using IcucApp.Services.PushWoosh;
 
 namespace IcucApp
 {
@@ -50,9 +51,7 @@ namespace IcucApp
                 // local services
                 container.Register<IDispatcher>(new DispatcherTouch(appDelegate));
                 container.Register<INavigator>(new TouchNavigator(app));
-                //container.Register<IFileSystem, TouchFileSystem>().AsSingleton();
-                //container.Register<IAssets, TouchAssets>().AsSingleton();
-                //container.Register<ISocialSharing, CustomSocicalSharing>().AsSingleton();
+                container.Register<IPushWooshAgent>(new PushWooshAgent());
             });
 
 			Container.Resolve<IDataLoader>().Start();

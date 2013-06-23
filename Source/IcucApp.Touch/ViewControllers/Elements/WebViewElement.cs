@@ -17,8 +17,9 @@ namespace IcucApp.ViewControllers.Elements
 		{
 			_webView = webView;
 			_webView.ScrollView.ScrollEnabled = false;
-			_webView.Frame = new RectangleF(3, 3, _webView.Frame.Width - 6, _webView.Frame.Height);
+			_webView.Frame = new RectangleF(0, 5, _webView.Frame.Width, _webView.Frame.Height);
 			_webView.SizeToFit();
+            _webView.BackgroundColor = UIColor.Red;
 			_webView.Alpha = 1.0f;
 		}
 		

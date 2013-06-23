@@ -14,6 +14,7 @@ namespace IcucApp.ViewControllers
 	public class InfoViewController : MvpDialogViewController<InfoPresenter>, IInfoView
     {
 		private UIWebView _webView;
+        private bool _refresh = false;
 		private int _currentContentHashcode;
 
 		public InfoViewController()
@@ -32,7 +33,7 @@ namespace IcucApp.ViewControllers
 			// Add WebView
 			_webView = new UIWebView()
 			{
-				Frame = new RectangleF(0, 0, 300, 50), //View.Frame.Height - Display.TabBarHeight - Display.NavigationBarHeight),
+				Frame = new RectangleF(3, 3, 300, 50), //View.Frame.Height - Display.TabBarHeight - Display.NavigationBarHeight),
 				// BackgroundColor = UIColor.White
 				Alpha = 0.0f
 			};
@@ -83,6 +84,8 @@ namespace IcucApp.ViewControllers
         public void DataBind(InfoViewModel model)
         {
             ShowSpinner(model.IsLoading);
+            if (!model.IsLoading)
+                EndRefreshing();
 
             if (!model.ErrorMessage.IsNullOrEmpty())
             {
@@ -91,6 +94,7 @@ namespace IcucApp.ViewControllers
                 var loadMore = new LoadingErrorElement();
                 loadMore.Tapped += (object sender, System.EventArgs e) => {
                     Presenter.ReloadAll();
+                    _refresh = true;
                 };
                 section.Add(loadMore);
                 rootElement.Add(section);
@@ -101,16 +105,18 @@ namespace IcucApp.ViewControllers
             if (!model.IsLoading) {
     			var template = new InfoTemplate () { Model = model };
     			var htmlContent = template.GenerateString();
-    			if (_currentContentHashcode != htmlContent.GetHashCode()) {
+    			if (_currentContentHashcode != htmlContent.GetHashCode() || _refresh) {
     				_webView.LoadHtmlString (htmlContent, null);
     				_currentContentHashcode = htmlContent.GetHashCode();
+                    _refresh = false;
                 }
             }
         }
 
 		protected override void OnPullDownRefresh (object sender, System.EventArgs e)
 		{
-			EndRefreshing();
+            Presenter.Reload();
+            _refresh = true;
 		}
 
     }

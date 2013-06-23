@@ -1,4 +1,6 @@
-﻿namespace IcucApp.Presentation.ViewModels
+﻿using System;
+
+namespace IcucApp.Presentation.ViewModels
 {
     public class FacebookDetailModel
     {

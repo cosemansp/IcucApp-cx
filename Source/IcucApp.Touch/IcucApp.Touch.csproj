@@ -49,7 +49,7 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <AssemblyName>IcucAppTouch</AssemblyName>
     <IpaPackageName />
-    <CodesignProvision>F9E17C1D-1398-4F22-A0B2-013FE4B2879B</CodesignProvision>
+    <CodesignProvision>34FAD628-5FD0-4016-9541-677BAD1F8628</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -71,7 +71,7 @@
     <CodesignKey>iPhone Developer: Peter Cosemans (7Y5ZPE46L2)</CodesignKey>
     <BuildIpa>True</BuildIpa>
     <AssemblyName>IcucAppTouch</AssemblyName>
-    <CodesignProvision>F9E17C1D-1398-4F22-A0B2-013FE4B2879B</CodesignProvision>
+    <CodesignProvision>34FAD628-5FD0-4016-9541-677BAD1F8628</CodesignProvision>
     <DefineConstants>TOUCH</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
@@ -190,9 +190,6 @@
     <Compile Include="..\IcucApp.Core\Presentation\NewsPresenter.cs">
       <Link>Presentation\NewsPresenter.cs</Link>
     </Compile>
-    <Compile Include="..\IcucApp.Core\Presentation\TicketPresenter.cs">
-      <Link>Presentation\TicketPresenter.cs</Link>
-    </Compile>
     <Compile Include="..\IcucApp.Core\Presentation\ViewModels\FacebookDetailModel.cs">
       <Link>Presentation\ViewModels\FacebookDetailModel.cs</Link>
     </Compile>
@@ -256,7 +253,6 @@
     <Compile Include="Core\UI\TouchNavigator.cs" />
     <Compile Include="ViewControllers\FacebookDetailViewController.cs" />
     <Compile Include="ViewControllers\Elements\WebsiteEntryElement.cs" />
-    <Compile Include="ViewControllers\TicketViewController.cs" />
     <Compile Include="ViewControllers\Elements\FacebookEntryElement.cs" />
     <Compile Include="ViewControllers\InfoViewController.cs" />
     <Compile Include="ViewControllers\LineupViewController.cs" />
@@ -303,9 +299,6 @@
       <DependentUpon>WebsiteDetailTemplate.cshtml</DependentUpon>
     </Compile>
     <Compile Include="ViewControllers\WebViewController.cs" />
-    <Compile Include="..\IcucApp.Core\Presentation\ViewModels\TicketModel.cs">
-      <Link>Presentation\ViewModels\TicketModel.cs</Link>
-    </Compile>
     <Compile Include="..\IcucApp.Core\Presentation\ViewModels\WebViewModel.cs">
       <Link>Presentation\ViewModels\WebViewModel.cs</Link>
     </Compile>
@@ -313,6 +306,7 @@
       <Link>Presentation\WebViewPresenter.cs</Link>
     </Compile>
     <Compile Include="ViewControllers\Elements\LoadingErrorCell.cs" />
+    <Compile Include="ViewControllers\Elements\LastUpdateElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default.png" />

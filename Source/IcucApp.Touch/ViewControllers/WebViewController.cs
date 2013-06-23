@@ -102,13 +102,13 @@ namespace IcucApp.ViewControllers
         public void DataBind(WebViewModel model)
         {
             ShowSpinner(false);
-			if (_currentUrl != model.Url) {
+			//if (_currentUrl != model.Url) {
 				var url = new NSUrl(model.Url);
 				var request = new NSUrlRequest(url);
 
 				_webView.LoadRequest(request);
 				_currentUrl = model.Url;
-			}
+			//}
         }
 
         protected void ShowSpinner(bool show = true)

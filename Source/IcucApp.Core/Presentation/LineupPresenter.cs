@@ -4,7 +4,9 @@ using IcucApp.Presentation.ViewModels;
 using IcucApp.Core;
 using IcucApp.Services.Syndication;
 using System;
+using System.Linq;
 using System.Collections.Generic;
+using IcucApp.Configuration;
 
 namespace IcucApp.Presentation
 {
@@ -19,6 +21,7 @@ namespace IcucApp.Presentation
         private readonly ICache _cache;
         private readonly IDataLoader _dataLoader;
 		private readonly IMapper<WordpressEntry, FeedData> _wordpressMapper;
+        private readonly AppSettings _appSettings;
         private int _segment = 0;
         private bool _isActive;
         private readonly ILog _log = LogManager.GetLogger(typeof(LineupPresenter).Name);
@@ -26,12 +29,14 @@ namespace IcucApp.Presentation
         public LineupPresenter(ILineupView view,
 		                       ICache cache,
 		                       IDataLoader dataLoader,
+                               AppSettings appSettings,
 		                       IMapper<WordpressEntry, FeedData> wordpressMapper) 
         {
             _view = view;
 			_cache = cache;
 			_dataLoader = dataLoader;
 			_wordpressMapper = wordpressMapper;
+            _appSettings = appSettings;
         }
 
         public void Initialize()
@@ -49,13 +54,18 @@ namespace IcucApp.Presentation
         public void OnViewShown()
         {
             _isActive = true;
-            var feed = _cache.GetLineupFeed(_segment == 0 ? "lineup" : "lineup2");
+            var lineupFeedCategory = _segment == 0 ? "lineup" : "lineup2";
+            var feed = _cache.GetLineupFeed(lineupFeedCategory);
 			if (feed == null)
 			{
                 // no data availble, is loading
 				_view.DataBind(LineupViewModel.Loading);
 				return;
 			}
+            if (feed.TimeStamp < DateTime.Now - _appSettings.TimeoutContent)
+            {
+                _dataLoader.ReloadWebsiteLineup(lineupFeedCategory);
+            }
 			DataBindView(feed);
         }
 
@@ -70,14 +80,17 @@ namespace IcucApp.Presentation
 				var model = new LineupViewModel();
                 if (context.Exception != null)
                 {
-                    model.ErrorMessage = "Ophalen icue nieuws is mislukt";
+                    model.ErrorMessage = "Ophalen line-up is mislukt";
                 }
+
                 if (context.Data != null && context.Data.Entries != null) 
 				{
-                    foreach (var websiteEntry in context.Data.Entries)
+                    var sortedEntries = context.Data.Entries.Select(x => x).OrderBy(x => x.date).ToList();
+                    foreach (var websiteEntry in sortedEntries)
 					{
 						model.Entries.Add(_wordpressMapper.Map(websiteEntry));
 					}
+                    model.LastUpdate = context.TimeStamp;
 				}
 				_view.DataBind(model);
 			}
@@ -100,7 +113,8 @@ namespace IcucApp.Presentation
 
 		public void Refresh ()
 		{
-            _dataLoader.ReloadWebsiteLineup();
+            var lineupFeedCategory = _segment == 0 ? "lineup" : "lineup2";
+            _dataLoader.ReloadWebsiteLineup(lineupFeedCategory);
 		}
     }
 }

@@ -8,6 +8,7 @@ using MonoTouch.UIKit;
 using BigTed;
 using IcucApp.Core.Touch.UIKit;
 using System.Drawing;
+using System;
 
 namespace IcucApp.ViewControllers
 {
@@ -25,7 +26,7 @@ namespace IcucApp.ViewControllers
         {
             base.ViewDidLoad();
 
-			_segmentedControl = new UISegmentedControl(new object[] {"Facebook", "Algemeen"});
+			_segmentedControl = new UISegmentedControl(new object[] {"Facebook", "Website"});
 			_segmentedControl.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
 			_segmentedControl.ControlStyle = UISegmentedControlStyle.Bar;
 			_segmentedControl.TintColor = UIColor.DarkGray;
@@ -76,26 +77,32 @@ namespace IcucApp.ViewControllers
                 };
                 section.Add(loadMore);
             }
-            foreach (var entry in model.Entries)
+            else 
             {
-                if (entry.Title.Trim(" ".ToCharArray()).IsNullOrEmpty())
-                    continue;
-				if (entry.Type == "facebook") {
-	                var element = new FacebookEntryElement(entry);
-                    element.Tapped += (sender, e) => {
-                        var thisElement = sender as FacebookEntryElement;
-                        Presenter.OnClickedFacebookFeed(thisElement.Data.Id);
-                    };
-	                section.Add(element);
-				}
-				else {
-					var element = new WebsiteEntryElement(entry);
-                    element.Tapped += (sender, e) => {
-                        var thisElement = sender as WebsiteEntryElement;
-                        Presenter.OnClickedWebsiteFeed(thisElement.Data.Id);
-                    };
-					section.Add(element);
-				}
+                if (!model.IsLoading)
+                    section.Add(new LastUpdateElement(model.LastUpdate));
+
+                foreach (var entry in model.Entries)
+                {
+                    if (entry.Title.Trim(" ".ToCharArray()).IsNullOrEmpty())
+                        continue;
+    				if (entry.Type == "facebook") {
+    	                var element = new FacebookEntryElement(entry);
+                        element.Tapped += (sender, e) => {
+                            var thisElement = sender as FacebookEntryElement;
+                            Presenter.OnClickedFacebookFeed(thisElement.Data.Id);
+                        };
+    	                section.Add(element);
+    				}
+    				else {
+    					var element = new WebsiteEntryElement(entry);
+                        element.Tapped += (sender, e) => {
+                            var thisElement = sender as WebsiteEntryElement;
+                            Presenter.OnClickedWebsiteFeed(thisElement.Data.Id);
+                        };
+    					section.Add(element);
+    				}
+                }
             }
 
             rootElement.Add(section);

@@ -23,7 +23,7 @@ namespace IcucApp.ViewControllers
         {
             base.ViewDidLoad();
 
-            _segmentedControl = new UISegmentedControl(new object[] {"Main Room", "Fucia"});
+            _segmentedControl = new UISegmentedControl(new object[] {"Main Room", "Fusia"});
             _segmentedControl.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
             _segmentedControl.ControlStyle = UISegmentedControlStyle.Bar;
             _segmentedControl.TintColor = UIColor.DarkGray;
@@ -67,15 +67,20 @@ namespace IcucApp.ViewControllers
                 };
                 section.Add(loadMore);
             }
-			foreach (var entry in model.Entries)
-			{
-				if (entry.Title.Trim(" ".ToCharArray()).IsNullOrEmpty())
-					continue;
-				var element = new LineupEntryElement(entry);
-				section.Add(element);
-			}
-			
-			rootElement.Add(section);
+            else 
+            {
+                if (!model.IsLoading)
+                    section.Add(new LastUpdateElement(model.LastUpdate));
+
+    			foreach (var entry in model.Entries)
+    			{
+    				if (entry.Title.Trim(" ".ToCharArray()).IsNullOrEmpty())
+    					continue;
+    				var element = new LineupEntryElement(entry);
+    				section.Add(element);
+    			}
+            }
+            rootElement.Add(section);
 			Root = rootElement;
 			
             ShowSpinner(model.IsLoading);

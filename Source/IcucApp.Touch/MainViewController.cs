@@ -22,7 +22,7 @@ namespace IcucApp
 
             // Add line-up tab
             var lineupTab = new UINavigationController(new LineupViewController());
-            lineupTab.TabBarItem = new UITabBarItem("Lineup", UIImage.FromBundle("star"), 2);
+            lineupTab.TabBarItem = new UITabBarItem("Line-up", UIImage.FromBundle("star"), 2);
             tabs.Add(lineupTab);
 
             // Add info tab

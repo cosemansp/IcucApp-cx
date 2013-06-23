@@ -30,7 +30,7 @@ namespace IcucApp.ViewControllers
             // Add WebView
             _webView = new UIWebView()
             {
-                Frame = new RectangleF(0, 0, 300, 50), 
+                Frame = new RectangleF(0, 0, 300, 70), 
                 Alpha = 0.0f
             };
             _webView.LoadFinished += (sender, e) => {
