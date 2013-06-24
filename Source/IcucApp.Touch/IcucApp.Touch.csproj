@@ -68,10 +68,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
-    <CodesignKey>iPhone Developer: Peter Cosemans (7Y5ZPE46L2)</CodesignKey>
+    <CodesignKey>iPhone Distribution: Euricom NV (B2W95ZRGNJ)</CodesignKey>
     <BuildIpa>True</BuildIpa>
     <AssemblyName>IcucAppTouch</AssemblyName>
-    <CodesignProvision>34FAD628-5FD0-4016-9541-677BAD1F8628</CodesignProvision>
+    <CodesignProvision>Automatic:AdHoc</CodesignProvision>
     <DefineConstants>TOUCH</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">

@@ -73,6 +73,9 @@ namespace IcucApp
 				if (image != null) {
 					_feedImage.Image = image.Crop(ImageWitdh, ImageHeigth, CropPosition.Center).RemoveSharpEdges(4);
 				}
+                else {
+                    _feedImage.Image = null;
+                }
 			}
             _timeLabel.Text = data.Published.ToString("HH:mm", new CultureInfo("nl-BE"));
 		}

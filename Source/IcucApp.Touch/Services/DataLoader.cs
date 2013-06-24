@@ -189,14 +189,6 @@ namespace IcucApp
             ReloadWebsiteLineup("app-" + category, category);
         }
 
-//        public void ReloadWebsiteLineup() {
-//            ReloadWebsiteLineup("app-lineup", "lineup");
-//        }
-//
-//        public void ReloadWebsiteLineupFucia() {
-//            ReloadWebsiteLineup("app-lineup2", "lineup2");
-//        }
-
         public void ReloadWebsiteLineup(string feed, string category) {
             Task.Factory
                 .StartNew<WordpressMessage>(() => 

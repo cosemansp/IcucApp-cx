@@ -23,7 +23,7 @@ namespace IcucApp.Presentation
 		private readonly IMapper<WordpressEntry, FeedData> _wordpressMapper;
         private readonly AppSettings _appSettings;
         private int _segment = 0;
-        private bool _isActive;
+        // private bool _isActive;
         private readonly ILog _log = LogManager.GetLogger(typeof(LineupPresenter).Name);
 
         public LineupPresenter(ILineupView view,
@@ -42,8 +42,8 @@ namespace IcucApp.Presentation
         public void Initialize()
         {
             _dataLoader.DataLoaded += (sender, e) => {
-                if (!_isActive)
-                    return;
+                //if (!_isActive)
+                //    return;
                 var feed = _cache.GetLineupFeed(_segment == 0 ? "lineup" : "lineup2");
                 if (feed != null) {
                     DataBindView(feed);
@@ -53,7 +53,7 @@ namespace IcucApp.Presentation
 
         public void OnViewShown()
         {
-            _isActive = true;
+            //_isActive = true;
             var lineupFeedCategory = _segment == 0 ? "lineup" : "lineup2";
             var feed = _cache.GetLineupFeed(lineupFeedCategory);
 			if (feed == null)

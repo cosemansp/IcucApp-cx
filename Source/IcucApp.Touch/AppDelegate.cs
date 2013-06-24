@@ -52,7 +52,7 @@ namespace IcucApp
             }
 
             // Go ahead and ask the user for permission to use Push Notifications
-            UIApplication.SharedApplication.RegisterForRemoteNotificationTypes(UIRemoteNotificationType.Alert);
+            UIApplication.SharedApplication.RegisterForRemoteNotificationTypes(UIRemoteNotificationType.Alert | UIRemoteNotificationType.Sound);
 
             // if the options is null we can stop here.
             if (options == null)
@@ -91,6 +91,9 @@ namespace IcucApp
 	    public override void OnActivated(UIApplication application)
 	    {
             Log.DebugFormat("OnActivated...");
+
+            // Reset badge
+            UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
 	    }
 
 	    public override void OnResignActivation(UIApplication application)
@@ -228,7 +231,9 @@ namespace IcucApp
 
                     // Manually show an alert
                     Log.InfoFormat("ReceivedRemoteNotification: alert: {0}, custom: {1}", alert, custom);
-                    UIAlertHelper.ShowAlert("Notification", alert, "Ok");
+
+                    // don't display anything
+                    // UIAlertHelper.ShowAlert("Notification", alert, "Ok");
                 }
             }
         }
