@@ -83,6 +83,8 @@
     <ConsolePause>False</ConsolePause>
     <CodesignKey>iPhone Distribution</CodesignKey>
     <AssemblyName>IcucAppTouch</AssemblyName>
+    <CodesignProvision>Automatic:AppStore</CodesignProvision>
+    <DefineConstants>TOUCH</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\IcucApp.Core\Configuration\AppSettings.cs">
