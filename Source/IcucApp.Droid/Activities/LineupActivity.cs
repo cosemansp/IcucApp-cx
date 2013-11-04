@@ -7,12 +7,12 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 
-namespace IcucApp.Droid
+namespace IcucApp.Activities
 {
     [Activity(Label = "IcucApp.Droid", MainLauncher = true, Icon = "@drawable/icon")]
-    public class Activity1 : Activity
+    public class LineupActivity : Activity
     {
-        int count = 1;
+        int _count = 1;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -25,7 +25,7 @@ namespace IcucApp.Droid
             // and attach an event to it
             Button button = FindViewById<Button>(Resource.Id.MyButton);
 
-            button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
+            button.Click += delegate { button.Text = string.Format("{0} clicks!", _count++); };
         }
     }
 }

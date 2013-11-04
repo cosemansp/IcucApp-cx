@@ -13,8 +13,8 @@ namespace IcucApp.Services.Facebook
     }
 
     /// <summary>
-    /// http://graph.facebook.com/ICUCevents?fref=ts
-    /// https://www.facebook.com/feeds/page.php?id=441615792534282&format=json
+    /// http://graph.facebook.com/Icucfestival?fref=ts
+    /// https://www.facebook.com/feeds/page.php?id=1394104164135054&format=json
     /// </summary>
     public class FacebookFeedAgent : IFacebookFeedAgent
     {

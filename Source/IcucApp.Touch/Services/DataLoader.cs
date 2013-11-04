@@ -150,7 +150,7 @@ namespace IcucApp
         }
 
 		public FacebookMessage LoadFacebookNews() {
-			return _facebookFeedAgent.GetFeeds("441615792534282" /* icuc feedId */);
+            return _facebookFeedAgent.GetFeeds("1394104164135054" /* icuc feedId */);
 		}
 
         // website feed

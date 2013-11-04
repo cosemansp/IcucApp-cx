@@ -212,7 +212,7 @@
     <Compile Include="..\IcucApp.Core\Services\Syndication\WordpressFeedAgent.cs">
       <Link>Services\Syndication\WordpressFeedAgent.cs</Link>
     </Compile>
-    <Compile Include="Activity1.cs" />
+    <Compile Include="Activities\LineupActivity.cs" />
     <Compile Include="Core\DispatcherDroid.cs" />
     <Compile Include="Diagnostics\AndroidLogAppender.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -241,7 +241,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkReference="8b8d8b0a-a2c1-4373-8149-a1a031cf7f77" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="8b8d8b0a-a2c1-4373-8149-a1a031cf7f77" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
